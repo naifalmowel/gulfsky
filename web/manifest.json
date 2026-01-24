@@ -1,0 +1,35 @@
+{
+    "name": "Gulf Sky Engineering Consultants",
+    "short_name": "Gulf Sky",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#1e2a5e",
+    "theme_color": "#f4a261",
+    "description": "Premier Engineering Solutions in the Middle East",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "LOGO.jpg",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "LOGO.jpg",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "LOGO.jpg",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "LOGO.jpg",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
