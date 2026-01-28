@@ -30,8 +30,14 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
   // UAE Locations (from user's provided file)
   final List<String> locations = [
-    'All', 'Dubai', 'Abu Dhabi', 'Sharjah',
-    'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain'
+    'All',
+    'Dubai',
+    'Abu Dhabi',
+    'Sharjah',
+    'Ajman',
+    'Ras Al Khaimah',
+    'Fujairah',
+    'Umm Al Quwain'
   ];
 
   // All Projects Data (from user's provided file)
@@ -47,7 +53,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.architecturalColor,
       'image': '$url/Tower/GS19.jpg'
     },
-
     {
       'title': 'G + 5P + H.C + 25TYP + 1Tec + H.P',
       'location': 'Al Khan - Sharjah',
@@ -57,8 +62,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.architecturalColor,
       'image': '$url/Tower/GS105.jpg'
     },
-
-
     {
       'title': 'G + 5P + 30TYP',
       'location': 'Al Mamzar - Dubai',
@@ -68,7 +71,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.architecturalColor,
       'image': '$url/Tower/GS308.jpg'
     },
-
     {
       'title': 'G + 7P + 30TYP + PentHouse + H.P',
       'location': 'Al Khan - Sharjah',
@@ -114,7 +116,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.architecturalColor,
       'image': '$url/Tower/GS235.jpg'
     },
-
     {
       'title': 'G + 3P + 15TYP + Penthouse + H.P',
       'location': 'Al Qasmia - Sharjah',
@@ -133,7 +134,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.architecturalColor,
       'image': '$url/Tower/GS239.jpg'
     },
-
     {
       'title': ' G + 3P + 10TYP',
       'location': 'Al Salama 5 - Umm Al Quwain',
@@ -206,8 +206,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.architecturalColor,
       'image': '$url/Residential/GS118.jpg'
     },
-
-
     {
       'title': 'G + 1P + 5TYP',
       'location': 'Al Muwaileh - Sharjah',
@@ -217,7 +215,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.architecturalColor,
       'image': '$url/Residential/GS200.jpg'
     },
-
     {
       'title': 'G + 1P + 5TYP',
       'location': 'Al Muwaileh - Sharjah',
@@ -281,8 +278,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.architecturalColor,
       'image': '$url/Tower/GS105.jpg'
     },
-
-
     {
       'title': 'G + 3P + H.C + SERV. + 15TYP',
       'location': 'Al Khan - Sharjah',
@@ -292,7 +287,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.consultingColor,
       'image': '$url/Hotels/GS48.jpg'
     },
-
     {
       'title': 'G + 3P + H.C + SERV. + 15TYP',
       'location': 'Al Nahda - Sharjah',
@@ -347,7 +341,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.consultingColor,
       'image': '$url/Hotels/GS50.jpg'
     },
-
     {
       'title': '8 VILLAS G + 1 FLOOR',
       'location': 'Al Maqtaa - Umm Al Quwain',
@@ -429,7 +422,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.approvalColor,
       'image': '$url/Villas/GS113.jpg'
     },
-
     {
       'title': 'G ONLY',
       'location': 'Al Homa - Sharjah',
@@ -439,7 +431,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.primaryBlue,
       'image': '$url/Education/GS100.jpg'
     },
-
     {
       'title': 'G + 1 FLOOR + 3 SERV',
       'location': 'Al A’zraa - Sharjah',
@@ -467,7 +458,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.primaryBlue,
       'image': '$url/Education/GS166.jpg'
     },
-
     {
       'title': 'G + 3P + SERV. + REST. + H.C + 15TYP + S.P',
       'location': 'Al Nahda - Sharjah',
@@ -486,7 +476,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'color': AppColors.accentGold,
       'image': '$url/Interior/1-1.jpg'
     },
-
     {
       'title': 'G + 3P + SERV. + REST. + H.C + 15TYP + S.P',
       'location': 'Al Nahda - Sharjah',
@@ -556,11 +545,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     );
   }
 
-  Widget _buildProjectsHeader(LanguageProvider languageProvider,
-      BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+  Widget _buildProjectsHeader(
+      LanguageProvider languageProvider, BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
 
     return Container(
@@ -614,8 +601,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       return projects; // Return all projects if filter is disabled
     }
     return projects.where((project) {
-      final typeMatch = selectedType == 'All' ||
-          project['type'] == selectedType;
+      final typeMatch =
+          selectedType == 'All' || project['type'] == selectedType;
       final locationMatch = selectedLocation == 'All' ||
           project['location'].toString().contains(selectedLocation);
       return typeMatch && locationMatch;
@@ -636,11 +623,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     }).length;
   }
 
-  Widget _buildProjectsGrid(LanguageProvider languageProvider,
-      BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+  Widget _buildProjectsGrid(
+      LanguageProvider languageProvider, BuildContext context) {
+    final size = MediaQuery.of(context).size;
 
     final filteredProjects = _getFilteredProjects();
     final displayedProjects = filteredProjects.take(_projectsToShow).toList();
@@ -682,15 +667,13 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               ),
               if (selectedType != 'All' || selectedLocation != 'All')
                 TextButton.icon(
-                  onPressed: () =>
-                      setState(() {
-                        selectedType = 'All';
-                        selectedLocation = 'All';
-                        _isFilterEnabled =
-                        true; // Disable filter when clearing
-                      }),
+                  onPressed: () => setState(() {
+                    selectedType = 'All';
+                    selectedLocation = 'All';
+                    _isFilterEnabled = true; // Disable filter when clearing
+                  }),
                   icon: const Icon(Icons.clear, size: 18),
-                  label:  Text(languageProvider.getString('clear_filters')),
+                  label: Text(languageProvider.getString('clear_filters')),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.accentGold,
                   ),
@@ -699,7 +682,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
           ).animate(delay: 200.ms).fadeIn(duration: 600.ms),
           const SizedBox(height: 30),
           if (filteredProjects.isEmpty)
-             SizedBox(
+            SizedBox(
               height: 300,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -728,16 +711,12 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               crossAxisSpacing: 30,
               mainAxisSpacing: 30,
               childAspectRatio: childAspectRatio,
-              children: displayedProjects
-                  .asMap()
-                  .entries
-                  .map((entry) {
+              children: displayedProjects.asMap().entries.map((entry) {
                 int index = entry.key;
                 Map<String, dynamic> project = entry.value;
                 return _buildProjectCard(project, index, context);
               }).toList(),
             ),
-
           if (_projectsToShow < filteredProjects.length)
             Padding(
               padding: const EdgeInsets.only(top: 30),
@@ -749,7 +728,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryBlue,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -767,121 +747,130 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         ],
       ),
     );
-
   }
 
-  Widget _buildProjectCard(Map<String, dynamic> project, int index,
-      BuildContext context) {
-    return StatefulBuilder(
-      builder: (context1 , setState1) {
-        return GestureDetector(
-          onTap: () {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => ProjectDetailScreen(project: project),
-            //   ),
-            // );
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                // Project Image/Visual
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
+  Widget _buildProjectCard(
+      Map<String, dynamic> project, int index, BuildContext context) {
+    return StatefulBuilder(builder: (context1, setState1) {
+      return GestureDetector(
+        onTap: () {
+          // Add missing keys if they don't exist before navigating
+          final fullProject = Map<String, dynamic>.from(project);
+          fullProject['icon'] = _getProjectIcon(project['type'] ?? 'Other');
+          fullProject['description'] = project['description'] ??
+              'Professional engineering project featuring innovative solutions and high-quality construction standards.';
 
+          Navigator.of(context).pushNamed(
+            '/project-detail',
+            arguments: fullProject,
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              // Project Image/Visual
+              Expanded(
+                flex: 3,
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
-                    child: ReloadableImage(imageUrl: project['image'] , fit: BoxFit.contain, color: project['color'],),
+                  ),
+                  child: ReloadableImage(
+                    key: ValueKey(
+                        '${project['image']}_${project['title']}_$index'),
+                    imageUrl: project['image'],
+                    fit: BoxFit.contain,
+                    color: project['color'],
                   ),
                 ),
+              ),
 
-                // Project Details
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Title
-                        Text(
-                          project['title'],
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryBlue,
-                          ),
+              // Project Details
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Title
+                      Text(
+                        project['title'],
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryBlue,
                         ),
-                        const SizedBox(height: 8),
-                        // Location
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              size: 16,
-                              color: project['color'],
-                            ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                project['location'],
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.mediumGray,
-                                ),
+                      ),
+                      const SizedBox(height: 8),
+                      // Location
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 16,
+                            color: project['color'],
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              project['location'],
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: AppColors.mediumGray,
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      const Spacer(),
+                      // Type Badge
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
                         ),
-                        const SizedBox(height: 8),
-                        const Spacer(),
-                        // Type Badge
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: project['color'],
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Text(
-                            project['type'],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
+                        decoration: BoxDecoration(
+                          color: project['color'],
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Text(
+                          project['type'],
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ).animate(delay: Duration(milliseconds: index * 100)).fadeIn(
-              duration: 800.ms).slideY(begin: 0.3),
-        );
-      }
-    );
+              ),
+            ],
+          ),
+        )
+            .animate(delay: Duration(milliseconds: index * 100))
+            .fadeIn(duration: 800.ms)
+            .slideY(begin: 0.3),
+      );
+    });
   }
 
   IconData _getProjectIcon(String type) {
@@ -910,9 +899,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 
   Widget _buildFilterSection(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
 
     return Container(
@@ -960,40 +947,40 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     activeThumbColor: AppColors.accentGold,
                   ),
                 ],
-              ).animate(delay: 400.ms).fadeIn(duration: 600.ms).slideX(
-                  begin: 0.3),
+              )
+                  .animate(delay: 400.ms)
+                  .fadeIn(duration: 600.ms)
+                  .slideX(begin: 0.3),
             ],
           ),
           const SizedBox(height: 30),
           if (_isFilterEnabled) // Only show dropdowns if filter is enabled
             isDesktop
                 ? Row(
-              children: [
-                Expanded(
-                  child: _buildTypeDropdown(context),
-                ),
-                const SizedBox(width: 30),
-                Expanded(
-                  child: _buildLocationDropdown(context),
-                ),
-              ],
-            )
+                    children: [
+                      Expanded(
+                        child: _buildTypeDropdown(context),
+                      ),
+                      const SizedBox(width: 30),
+                      Expanded(
+                        child: _buildLocationDropdown(context),
+                      ),
+                    ],
+                  )
                 : Column(
-              children: [
-                _buildTypeDropdown(context),
-                const SizedBox(height: 20),
-                _buildLocationDropdown(context),
-              ],
-            ),
+                    children: [
+                      _buildTypeDropdown(context),
+                      const SizedBox(height: 20),
+                      _buildLocationDropdown(context),
+                    ],
+                  ),
         ],
       ),
     );
   }
 
   Widget _buildTypeDropdown(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
 
     return Column(
@@ -1085,7 +1072,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                             ),
                           ),
                         ),
-
                         if (count > 0)
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -1105,8 +1091,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                               ),
                             ),
                           ),
-
-
                       ],
                     ),
                   ),
@@ -1120,9 +1104,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 
   Widget _buildLocationDropdown(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
 
     return Column(
@@ -1196,8 +1178,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Icon(
-                            location == 'All' ? Icons.public : Icons
-                                .location_on,
+                            location == 'All'
+                                ? Icons.public
+                                : Icons.location_on,
                             color: AppColors.accentGold,
                             size: 20,
                           ),

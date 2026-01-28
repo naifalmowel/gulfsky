@@ -7,21 +7,20 @@ class ScrollProvider extends ChangeNotifier {
 
   int _currentSectionIndex = 0;
   bool _isScrolling = false;
-  bool _showNavbar = true; // Always show navbar as requested
+  final bool _showNavbar = true; // Always show navbar as requested
   bool _isInitialized = false;
   bool _isAtTop = true;
-
-
 
   int get currentSectionIndex => _currentSectionIndex;
   bool get isScrolling => _isScrolling;
   bool get showNavbar => _showNavbar;
   bool get isInitialized => _isInitialized;
   bool get isAtTop => _isAtTop;
-init(){
-  itemScrollController = ItemScrollController();
-  itemPositionsListener = ItemPositionsListener.create();
-}
+  init() {
+    itemScrollController = ItemScrollController();
+    itemPositionsListener = ItemPositionsListener.create();
+  }
+
   ScrollProvider() {
     // Listen to scroll position changes with error handling
     itemPositionsListener.itemPositions.addListener(_onPositionChanged);
@@ -47,10 +46,12 @@ init(){
           if (position.itemLeadingEdge >= 0 && position.itemTrailingEdge <= 1) {
             // Fully visible
             visibility = 1.0;
-          } else if (position.itemLeadingEdge < 0 && position.itemTrailingEdge > 0) {
+          } else if (position.itemLeadingEdge < 0 &&
+              position.itemTrailingEdge > 0) {
             // Partially visible from top
             visibility = position.itemTrailingEdge;
-          } else if (position.itemLeadingEdge < 1 && position.itemTrailingEdge > 1) {
+          } else if (position.itemLeadingEdge < 1 &&
+              position.itemTrailingEdge > 1) {
             // Partially visible from bottom
             visibility = 1.0 - position.itemLeadingEdge;
           }
@@ -60,7 +61,8 @@ init(){
             mostVisible = position;
           }
         }
-        final atTop = positions.any((p) => p.index == 0 && p.itemLeadingEdge >= 0.0);
+        final atTop =
+            positions.any((p) => p.index == 0 && p.itemLeadingEdge >= 0.0);
 
         if (_isAtTop != atTop) {
           _isAtTop = atTop;
@@ -80,7 +82,10 @@ init(){
     if (_isScrolling || !_isInitialized) return;
 
     // Validate section index
-    if (sectionIndex < 0 || sectionIndex > 5) return;
+    if (sectionIndex < 0 || sectionIndex > 5) {
+      debugPrint('Invalid section index: $sectionIndex');
+      return;
+    }
 
     _isScrolling = true;
     notifyListeners();
@@ -93,10 +98,12 @@ init(){
           curve: Curves.easeInOutCubic,
           alignment: 0.0, // Align to top
         );
+      } else {
+        debugPrint('ItemScrollController is not attached');
       }
-
-    } catch (e) {
+    } catch (e, stackTrace) {
       debugPrint('Scroll error: $e');
+      debugPrint('Stack trace: $stackTrace');
     } finally {
       // Add delay to ensure scroll completes
       await Future.delayed(const Duration(milliseconds: 100));
@@ -132,10 +139,5 @@ init(){
   // Method to check if controller is ready
   bool get isControllerReady {
     return _isInitialized && itemScrollController.isAttached;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

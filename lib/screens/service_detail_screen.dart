@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/app_colors.dart';
 import '../providers/language_provider.dart';
-import '../widgets/animated_navbar.dart';
 
 class ServiceDetailScreen extends StatelessWidget {
   final Map<String, dynamic> service;
@@ -23,21 +22,26 @@ class ServiceDetailScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Align(
-                      alignment: Alignment.topLeft,
+                        alignment: Alignment.topLeft,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: BackButton(color: Colors.black,onPressed: (){Navigator.of(context).pop();},),
+                          child: BackButton(
+                            color: Colors.black,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
                         )), // Space for navbar
                     _buildServiceHeader(context),
-                    _buildServiceContent(context , languageProvider),
-                    _buildServiceFeatures(context , languageProvider),
-                    _buildServiceProcess(context , languageProvider),
-                    _buildContactSection(context , languageProvider),
+                    _buildServiceContent(context, languageProvider),
+                    _buildServiceFeatures(context, languageProvider),
+                    _buildServiceProcess(context, languageProvider),
+                    _buildContactSection(context, languageProvider),
                     const SizedBox(height: 60),
                   ],
                 ),
               ),
-              
+
               // Navbar
             ],
           ),
@@ -49,18 +53,22 @@ class ServiceDetailScreen extends StatelessWidget {
   Widget _buildServiceHeader(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    
+
     return Container(
       height: isDesktop ? 400 : 300,
       decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(service['image']) ,fit: BoxFit.cover),
-
+        image: service['image'] != null
+            ? DecorationImage(
+                image: AssetImage(service['image']), fit: BoxFit.cover)
+            : null,
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            service['color'].withOpacity(0.9),
-            service['color'].withOpacity(0.7),
+            (service['color'] as Color? ?? AppColors.primaryBlue)
+                .withOpacity(0.9),
+            (service['color'] as Color? ?? AppColors.primaryBlue)
+                .withOpacity(0.7),
           ],
         ),
       ),
@@ -91,7 +99,7 @@ class ServiceDetailScreen extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // Content
           Center(
             child: Padding(
@@ -108,7 +116,7 @@ class ServiceDetailScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Icon(
-                      service['icon'],
+                      service['icon'] as IconData? ?? Icons.engineering,
                       size: 50,
                       color: Colors.white,
                     ),
@@ -116,12 +124,11 @@ class ServiceDetailScreen extends StatelessWidget {
                       .animate()
                       .scale(begin: const Offset(0.5, 0.5), duration: 800.ms)
                       .fadeIn(duration: 600.ms),
-                  
+
                   const SizedBox(height: 30),
-                  
-                  // Service Title
+
                   Text(
-                    service['title'],
+                    service['title'] ?? '',
                     style: TextStyle(
                       fontSize: isDesktop ? 42 : 32,
                       fontWeight: FontWeight.bold,
@@ -132,12 +139,11 @@ class ServiceDetailScreen extends StatelessWidget {
                       .animate(delay: 300.ms)
                       .fadeIn(duration: 800.ms)
                       .slideY(begin: 0.3),
-                  
+
                   const SizedBox(height: 20),
-                  
-                  // Service Description
+
                   Text(
-                    service['description'],
+                    service['description'] ?? '',
                     style: TextStyle(
                       fontSize: isDesktop ? 18 : 16,
                       color: Colors.white.withOpacity(0.9),
@@ -157,10 +163,11 @@ class ServiceDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildServiceContent(BuildContext context , LanguageProvider languageProvider) {
+  Widget _buildServiceContent(
+      BuildContext context, LanguageProvider languageProvider) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 80 : 20,
@@ -176,48 +183,43 @@ class ServiceDetailScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: AppColors.primaryBlue,
             ),
-          )
-              .animate(delay: 200.ms)
-              .fadeIn(duration: 800.ms)
-              .slideY(begin: 0.3),
-          
+          ).animate(delay: 200.ms).fadeIn(duration: 800.ms).slideY(begin: 0.3),
+
           const SizedBox(height: 30),
-          
+
           Container(
             width: 80,
             height: 4,
             decoration: BoxDecoration(
-              color: service['color'],
+              color: service['color'] as Color? ?? AppColors.accentGold,
               borderRadius: BorderRadius.circular(2),
             ),
-          )
-              .animate(delay: 400.ms)
-              .scaleX(begin: 0, duration: 600.ms),
-          
+          ).animate(delay: 400.ms).scaleX(begin: 0, duration: 600.ms),
+
           const SizedBox(height: 40),
-          
+
           Text(
-            _getDetailedDescription(service['type'] , languageProvider),
+            _getDetailedDescription(
+                service['type'] ?? service['title'] ?? '', languageProvider),
             style: TextStyle(
               fontSize: isDesktop ? 16 : 14,
               color: AppColors.darkGray,
               height: 1.8,
             ),
             textAlign: TextAlign.justify,
-          )
-              .animate(delay: 600.ms)
-              .fadeIn(duration: 800.ms),
+          ).animate(delay: 600.ms).fadeIn(duration: 800.ms),
         ],
       ),
     );
   }
 
-  Widget _buildServiceFeatures(BuildContext context , LanguageProvider languageProvider) {
+  Widget _buildServiceFeatures(
+      BuildContext context, LanguageProvider languageProvider) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 1200;
     final isTap = size.width > 800;
-    final features = _getServiceFeatures(service['type'] , languageProvider);
-    
+    final features = _getServiceFeatures(service['type'], languageProvider);
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 80 : 20,
@@ -235,23 +237,27 @@ class ServiceDetailScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: AppColors.primaryBlue,
             ),
-          )
-              .animate(delay: 200.ms)
-              .fadeIn(duration: 800.ms),
-          
+          ).animate(delay: 200.ms).fadeIn(duration: 800.ms),
           const SizedBox(height: 50),
-          
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: isDesktop ? 2 :isTap ? 2 :  1,
+            crossAxisCount: isDesktop
+                ? 2
+                : isTap
+                    ? 2
+                    : 1,
             crossAxisSpacing: 30,
             mainAxisSpacing: 30,
-            childAspectRatio: isDesktop ? 3.2 :isTap ? size.width*0.002  :  2.1,
+            childAspectRatio: isDesktop
+                ? 3.2
+                : isTap
+                    ? size.width * 0.002
+                    : 2.1,
             children: features.asMap().entries.map((entry) {
               int index = entry.key;
               Map<String, dynamic> feature = entry.value;
-              
+
               return Container(
                 padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
@@ -321,11 +327,12 @@ class ServiceDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildServiceProcess(BuildContext context , LanguageProvider languageProvider) {
+  Widget _buildServiceProcess(
+      BuildContext context, LanguageProvider languageProvider) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    final steps = _getServiceProcess(service['type'] , languageProvider);
-    
+    final steps = _getServiceProcess(service['type'], languageProvider);
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 80 : 20,
@@ -340,16 +347,12 @@ class ServiceDetailScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: AppColors.primaryBlue,
             ),
-          )
-              .animate(delay: 200.ms)
-              .fadeIn(duration: 800.ms),
-          
+          ).animate(delay: 200.ms).fadeIn(duration: 800.ms),
           const SizedBox(height: 50),
-          
           ...steps.asMap().entries.map((entry) {
             int index = entry.key;
             Map<String, dynamic> step = entry.value;
-            
+
             return Container(
               margin: const EdgeInsets.only(bottom: 30),
               child: Row(
@@ -374,9 +377,9 @@ class ServiceDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(width: 20),
-                  
+
                   // Step Content
                   Expanded(
                     child: Column(
@@ -408,16 +411,17 @@ class ServiceDetailScreen extends StatelessWidget {
                 .animate(delay: Duration(milliseconds: 300 + (index * 150)))
                 .fadeIn(duration: 800.ms)
                 .slideX(begin: -0.3);
-          }).toList(),
+          }),
         ],
       ),
     );
   }
 
-  Widget _buildContactSection(BuildContext context , LanguageProvider languageProvider) {
+  Widget _buildContactSection(
+      BuildContext context, LanguageProvider languageProvider) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 80 : 20,
@@ -443,12 +447,8 @@ class ServiceDetailScreen extends StatelessWidget {
               color: AppColors.primaryBlue,
             ),
             textAlign: TextAlign.center,
-          )
-              .animate(delay: 200.ms)
-              .fadeIn(duration: 800.ms),
-          
+          ).animate(delay: 200.ms).fadeIn(duration: 800.ms),
           const SizedBox(height: 20),
-          
           Text(
             languageProvider.getString('contact_des'),
             style: TextStyle(
@@ -457,12 +457,8 @@ class ServiceDetailScreen extends StatelessWidget {
               height: 1.6,
             ),
             textAlign: TextAlign.center,
-          )
-              .animate(delay: 400.ms)
-              .fadeIn(duration: 800.ms),
-          
+          ).animate(delay: 400.ms).fadeIn(duration: 800.ms),
           const SizedBox(height: 40),
-          
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -497,9 +493,7 @@ class ServiceDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
               const SizedBox(width: 20),
-              
               OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -540,13 +534,14 @@ class ServiceDetailScreen extends StatelessWidget {
     );
   }
 
-  String _getDetailedDescription(String serviceType , LanguageProvider languageProvider) {
+  String _getDetailedDescription(
+      String serviceType, LanguageProvider languageProvider) {
     switch (serviceType) {
       case 'Architectural Design' || 'التصميم المعماري':
         return languageProvider.getString('service_architectural_details');
       case 'Construction Management' || 'إدارة الإنشاءات':
         return languageProvider.getString('service_construction_details');
-      case 'Engineering Consultants'||'المهندسون الاستشاريون':
+      case 'Engineering Consultants' || 'المهندسون الاستشاريون':
         return languageProvider.getString('service_consulting_details');
       case 'Approvals & Permits' || 'الحصول على التراخيص':
         return languageProvider.getString('service_approval_details');
@@ -555,9 +550,10 @@ class ServiceDetailScreen extends StatelessWidget {
     }
   }
 
-  List<Map<String, dynamic>> _getServiceFeatures(String serviceType  , LanguageProvider languageProvider) {
+  List<Map<String, dynamic>> _getServiceFeatures(
+      String serviceType, LanguageProvider languageProvider) {
     switch (serviceType) {
-      case 'Architectural Design'|| 'التصميم المعماري':
+      case 'Architectural Design' || 'التصميم المعماري':
         return [
           {
             'icon': Icons.design_services,
@@ -567,7 +563,8 @@ class ServiceDetailScreen extends StatelessWidget {
           {
             'icon': Icons.eco,
             'title': languageProvider.getString('sustainable_solutions'),
-            'description': languageProvider.getString('sustainable_solutions_desc'),
+            'description':
+                languageProvider.getString('sustainable_solutions_desc'),
           },
           {
             'icon': Icons.computer,
@@ -585,7 +582,8 @@ class ServiceDetailScreen extends StatelessWidget {
           {
             'icon': Icons.schedule,
             'title': languageProvider.getString('project_scheduling'),
-            'description': languageProvider.getString('project_scheduling_desc'),
+            'description':
+                languageProvider.getString('project_scheduling_desc'),
           },
           {
             'icon': Icons.security,
@@ -603,17 +601,19 @@ class ServiceDetailScreen extends StatelessWidget {
             'description': languageProvider.getString('team_coordination_desc'),
           },
         ];
-      case 'Engineering Consultants'||'المهندسون الاستشاريون':
+      case 'Engineering Consultants' || 'المهندسون الاستشاريون':
         return [
           {
             'icon': Icons.engineering,
             'title': languageProvider.getString('technical_expertise'),
-            'description': languageProvider.getString('technical_expertise_desc'),
+            'description':
+                languageProvider.getString('technical_expertise_desc'),
           },
           {
             'icon': Icons.analytics,
             'title': languageProvider.getString('analysis_optimization'),
-            'description': languageProvider.getString('analysis_optimization_desc'),
+            'description':
+                languageProvider.getString('analysis_optimization_desc'),
           },
           {
             'icon': Icons.support,
@@ -626,7 +626,7 @@ class ServiceDetailScreen extends StatelessWidget {
             'description': languageProvider.getString('quality_assurance_desc'),
           },
         ];
-      case 'Approvals & Permits'|| 'الحصول على التراخيص':
+      case 'Approvals & Permits' || 'الحصول على التراخيص':
         return [
           {
             'icon': Icons.description,
@@ -646,7 +646,8 @@ class ServiceDetailScreen extends StatelessWidget {
           {
             'icon': Icons.check_circle,
             'title': languageProvider.getString('compliance_guarantee'),
-            'description': languageProvider.getString('compliance_guarantee_desc'),
+            'description':
+                languageProvider.getString('compliance_guarantee_desc'),
           },
         ];
       default:
@@ -654,25 +655,30 @@ class ServiceDetailScreen extends StatelessWidget {
     }
   }
 
-  List<Map<String, dynamic>> _getServiceProcess(String serviceType , LanguageProvider languageProvider) {
+  List<Map<String, dynamic>> _getServiceProcess(
+      String serviceType, LanguageProvider languageProvider) {
     switch (serviceType) {
-      case 'Architectural Design'|| 'التصميم المعماري':
+      case 'Architectural Design' || 'التصميم المعماري':
         return [
           {
             'title': languageProvider.getString('initial_consultation'),
-            'description': languageProvider.getString('initial_consultation_desc'),
+            'description':
+                languageProvider.getString('initial_consultation_desc'),
           },
           {
             'title': languageProvider.getString('concept_development'),
-            'description': languageProvider.getString('concept_development_desc'),
+            'description':
+                languageProvider.getString('concept_development_desc'),
           },
           {
             'title': languageProvider.getString('design_development'),
-            'description': languageProvider.getString('design_development_desc'),
+            'description':
+                languageProvider.getString('design_development_desc'),
           },
           {
             'title': languageProvider.getString('final_documentation'),
-            'description': languageProvider.getString('final_documentation_desc'),
+            'description':
+                languageProvider.getString('final_documentation_desc'),
           },
         ];
       case 'Construction Management' || 'إدارة الإنشاءات':
@@ -687,33 +693,39 @@ class ServiceDetailScreen extends StatelessWidget {
           },
           {
             'title': languageProvider.getString('construction_oversight'),
-            'description': languageProvider.getString('construction_oversight_desc'),
+            'description':
+                languageProvider.getString('construction_oversight_desc'),
           },
           {
             'title': languageProvider.getString('project_completion'),
-            'description': languageProvider.getString('project_completion_desc'),
+            'description':
+                languageProvider.getString('project_completion_desc'),
           },
         ];
-      case 'Engineering Consultants'||'المهندسون الاستشاريون':
+      case 'Engineering Consultants' || 'المهندسون الاستشاريون':
         return [
           {
             'title': languageProvider.getString('problem_assessment'),
-            'description': languageProvider.getString('problem_assessment_desc'),
+            'description':
+                languageProvider.getString('problem_assessment_desc'),
           },
           {
             'title': languageProvider.getString('solution_development'),
-            'description': languageProvider.getString('solution_development_desc'),
+            'description':
+                languageProvider.getString('solution_development_desc'),
           },
           {
             'title': languageProvider.getString('implementation_support'),
-              'description': languageProvider.getString('implementation_support_desc'),
+            'description':
+                languageProvider.getString('implementation_support_desc'),
           },
           {
             'title': languageProvider.getString('performance_evaluation'),
-            'description': languageProvider.getString('performance_evaluation_desc'),
+            'description':
+                languageProvider.getString('performance_evaluation_desc'),
           },
         ];
-      case 'Approvals & Permits'|| 'الحصول على التراخيص':
+      case 'Approvals & Permits' || 'الحصول على التراخيص':
         return [
           {
             'title': languageProvider.getString('document_review'),
@@ -721,11 +733,13 @@ class ServiceDetailScreen extends StatelessWidget {
           },
           {
             'title': languageProvider.getString('application_preparation'),
-            'description': languageProvider.getString('application_preparation_desc'),
+            'description':
+                languageProvider.getString('application_preparation_desc'),
           },
           {
             'title': languageProvider.getString('authority_coordination'),
-            'description': languageProvider.getString('authority_coordination_desc'),
+            'description':
+                languageProvider.getString('authority_coordination_desc'),
           },
           {
             'title': languageProvider.getString('permit_issuance'),

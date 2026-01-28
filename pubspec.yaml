@@ -20,18 +20,20 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   visibility_detector: ^0.4.0+2
   flutter_animate: ^4.2.0+1
-  scrollable_positioned_list: any
+  scrollable_positioned_list: ^0.3.8
+  
   # Utilities
   url_launcher: ^6.1.12
-  intl:
+  intl: 0.20.2
   provider: ^6.0.5
   http: ^1.2.0
-  font_awesome_flutter: any
+  font_awesome_flutter: ^10.6.0
   cached_network_image: ^3.4.1
   js: ^0.6.7
   
   # Icons and UI
   cupertino_icons: ^1.0.2
+  flutter_dotenv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -45,5 +47,6 @@ flutter:
     - assets/images/
     - assets/translations/
     - assets/icons/
+    - .env
 
 

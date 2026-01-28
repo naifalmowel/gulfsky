@@ -21,7 +21,6 @@ class _ContactSectionState extends State<ContactSection>
   late AnimationController _animationController;
   late AnimationController _formController;
   bool _isVisible = false;
-  bool _viewMap = false;
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -82,7 +81,7 @@ class _ContactSectionState extends State<ContactSection>
                 // Section Title
                 _buildSectionTitle(languageProvider, isDesktop),
 
-                const SizedBox(height: 60),
+
 
                 // Content
                 if (isDesktop)
@@ -125,6 +124,8 @@ class _ContactSectionState extends State<ContactSection>
   Widget _buildDesktopLayout(LanguageProvider languageProvider) {
     return Column(
       children: [
+        _buildContactForm(languageProvider),
+        const SizedBox(height: 60),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -136,14 +137,14 @@ class _ContactSectionState extends State<ContactSection>
 
             const SizedBox(width: 60),
 
-            // Right - Contact Form
+            // Right - Map
             Expanded(
               flex: 1,
-              child: _buildContactForm(languageProvider),
+              child:_buildMapSection(context,languageProvider),
             ),
           ],
         ),
-        _viewMap?_buildMapSection(context,languageProvider):Container(),
+
       ],
     );
   }
@@ -151,11 +152,12 @@ class _ContactSectionState extends State<ContactSection>
   Widget _buildMobileLayout(LanguageProvider languageProvider) {
     return Column(
       children: [
-        _buildContactInfo(languageProvider),
-        // const SizedBox(height: 40),
         _buildContactForm(languageProvider),
         const SizedBox(height: 40),
-        _viewMap?_buildMapSection(context,languageProvider):Container(),
+        _buildContactInfo(languageProvider),
+
+        const SizedBox(height: 40),
+        _buildMapSection(context,languageProvider),
       ],
     );
   }
@@ -318,12 +320,6 @@ class _ContactSectionState extends State<ContactSection>
                       child: Icon(icon, color: color, size: 25),
                     ),
                   ],
-                  if (icon == Icons.location_on)
-                    TextButton(onPressed: (){
-                      setState(() {
-                        _viewMap = !_viewMap;
-                      });
-                    }, child: Text(_viewMap?"Hide Map":"View Map", style: const TextStyle(fontWeight: FontWeight.bold , color: Colors.blue),))
                 ],
               ),
             ),
@@ -335,18 +331,25 @@ class _ContactSectionState extends State<ContactSection>
 
   Widget _buildMapSection(BuildContext context , LanguageProvider languageProvider) {
     final size = MediaQuery.of(context).size;
-    final isDesktop = size.width > 1200;
+    final isDesktop = size.width > 768;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
         width: isDesktop ? size.width / 3 : size.width,
-        height: 500,
-        decoration: const BoxDecoration(
+
+        height: 550,
+        margin: EdgeInsets.only(
+          top: isDesktop?80:0,
+        ) ,
+        decoration:  BoxDecoration(
+          border: Border.all(color: AppColors.secondaryBlue),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           gradient: AppColors.lightGradient,
         ),
         child: Column(
           children: [
+            const SizedBox(height: 5),
             const Expanded(
               child: Center(
                 child: ContactMap(),
@@ -397,6 +400,7 @@ class _ContactSectionState extends State<ContactSection>
                 const SizedBox(height: 30),
                 Container(
                   padding: const EdgeInsets.all(40),
+                  width: 1000,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -450,7 +454,7 @@ class _ContactSectionState extends State<ContactSection>
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
                             }
-                            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
                                 .hasMatch(value)) {
                               return 'Please enter a valid email';
                             }
@@ -592,23 +596,25 @@ class _ContactSectionState extends State<ContactSection>
       }),
     );
 
-    if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Message sent successfully!'),
-          backgroundColor: AppColors.constructionColor,
-        ),
-      );
-      _nameController.clear();
-      _emailController.clear();
-      _messageController.clear();
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('❌ Failed to send email'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
+   if(mounted){
+     if (response.statusCode == 200) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         const SnackBar(
+           content: Text('Message sent successfully!'),
+           backgroundColor: AppColors.constructionColor,
+         ),
+       );
+       _nameController.clear();
+       _emailController.clear();
+       _messageController.clear();
+     } else {
+       ScaffoldMessenger.of(context).showSnackBar(
+         const SnackBar(
+           content: Text('❌ Failed to send email'),
+           backgroundColor: Colors.red,
+         ),
+       );
+     }
+   }
   }
 }

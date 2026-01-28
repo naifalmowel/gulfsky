@@ -11,7 +11,15 @@ import 'screens/projects_screen.dart';
 import 'screens/contact_screen.dart';
 import 'constants/app_colors.dart';
 
-void main() {
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+void main() async {
+  // Creating a new future just in case .env is missing or fails to load, so app doesn't crash on start
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    print("Could not load .env file: $e");
+  }
   runApp(const GulfSkyWebsite());
 }
 
@@ -45,15 +53,52 @@ class GulfSkyWebsite extends StatelessWidget {
               ),
             ),
             initialRoute: '/',
-            routes: {
-              '/': (context) => Directionality(
-                textDirection: languageProvider.textDirection,
-                child: const HomeScreen(),
-              ),
-              '/projects': (context) => const ProjectsScreen(),
-              '/contact': (context) => const ContactScreen(),
-              '/service-detail': (context) => const ServiceDetailScreen(service: {}),
-              '/project-detail': (context) => const ProjectDetailScreen(project: {}),
+            onGenerateRoute: (settings) {
+              // Handle routes with parameters properly
+              switch (settings.name) {
+                case '/':
+                  return MaterialPageRoute(
+                    settings: settings,
+                    builder: (context) => Directionality(
+                      textDirection: languageProvider.textDirection,
+                      child: const HomeScreen(),
+                    ),
+                  );
+                case '/projects':
+                  return MaterialPageRoute(
+                    settings: settings,
+                    builder: (context) => const ProjectsScreen(),
+                  );
+                case '/contact':
+                  return MaterialPageRoute(
+                    settings: settings,
+                    builder: (context) => const ContactScreen(),
+                  );
+                case '/service-detail':
+                  final service = settings.arguments as Map<String, dynamic>?;
+                  return MaterialPageRoute(
+                    settings: settings,
+                    builder: (context) => ServiceDetailScreen(
+                      service: service ?? {},
+                    ),
+                  );
+                case '/project-detail':
+                  final project = settings.arguments as Map<String, dynamic>?;
+                  return MaterialPageRoute(
+                    settings: settings,
+                    builder: (context) => ProjectDetailScreen(
+                      project: project ?? {},
+                    ),
+                  );
+                default:
+                  return MaterialPageRoute(
+                    settings: settings,
+                    builder: (context) => Directionality(
+                      textDirection: languageProvider.textDirection,
+                      child: const HomeScreen(),
+                    ),
+                  );
+              }
             },
           );
         },

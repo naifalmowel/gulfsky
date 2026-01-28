@@ -237,34 +237,6 @@ class _AboutSectionState extends State<AboutSection>
         .slideY(begin: 0.3);
   }
 
-  Widget _buildVisualElement() {
-    return Container(
-      height: 400,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.primaryBlue.withOpacity(0.8),
-            AppColors.accentGold.withOpacity(0.8),
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 30,
-            offset: const Offset(0, 15),
-          ),
-        ],
-        image: const DecorationImage(image: AssetImage('assets/images/aboutus.jpg') , fit: BoxFit.cover)
-      ),
-
-    )
-        .animate()
-        .fadeIn(duration: 1000.ms, delay: 300.ms)
-        .scale(begin: const Offset(0.8, 0.8));
-  }
 
   Widget _buildStatistics(LanguageProvider languageProvider, bool isDesktop) {
     final stats = [

@@ -1,146 +1,176 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base href="$FLUTTER_BASE_HREF">
+    <base href="$FLUTTER_BASE_HREF">
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Gulf Sky Engineering Consultants - Premier Engineering Solutions in the Middle East">
-  <meta name="keywords" content="engineering, consultants, UAE, architecture, construction, gulf sky">
-  <meta name="author" content="Gulf Sky Engineering Consultants">
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <!-- Primary SEO -->
+    <title>Gulf Sky Engineering Consultants</title>
+    <meta name="description"
+          content="Gulf Sky Engineering Consultants provide professional engineering, architecture, and construction consultancy services across the UAE and Middle East.
+           تقدم شركة جلف سكاي للاستشارات الهندسية خدمات استشارية احترافية في مجالات الهندسة المعمارية والإنشائية في جميع أنحاء الإمارات العربية المتحدة والشرق الأوسط.">
+    <meta name="keywords"
+          content="engineering consultants, UAE engineering, architecture, construction consultancy, Gulf Sky ,
+            استشارات هندسية,مكتب هندسي في الإمارات,شركة هندسية في الشارقة,استشاري هندسي معتمد,تصميم معماري,إدارة مشاريع إنشائية">
+    <meta name="author" content="Gulf Sky Engineering Consultants">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://gulfskygroup.com/">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Gulf Sky">
-  <link rel="apple-touch-icon" href="LOGO.jpg">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Gulf Sky Engineering Consultants">
+    <meta property="og:description"
+          content="Professional engineering and consultancy solutions in the UAE and Middle East.">
+    <meta property="og:url" content="https://gulfskygroup.com/">
+    <meta property="og:image" content="LOGO.jpg">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="LOGO.jpg"/>
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gulf Sky Engineering Consultants">
+    <meta name="twitter:description"
+          content="Engineering & construction consultancy experts in the Middle East.">
+    <meta name="twitter:image" content="LOGO.jpg">
 
-  <title>Gulf Sky Engineering Consultants</title>
-  <link rel="manifest" href="manifest.json">
+    <!-- PWA / iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Gulf Sky">
+    <link rel="apple-touch-icon" href="LOGO.jpg">
+    <link rel="manifest" href="manifest.json">
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Gulf Sky">
+    <link rel="apple-touch-icon" href="LOGO.jpg">
 
-  <script>
-    window.flutterWebRenderer = "html";
-    var serviceWorkerVersion = "{{flutter_service_worker_version}}";
-  </script>
-  <script src="flutter.js" defer></script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="LOGO.jpg"/>
 
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Gulf Sky Engineering Consultants</title>
+    <link rel="manifest" href="manifest.json">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #1e2a5e 0%, #2d4a8e 100%);
-      overflow: hidden;
-    }
+    <script>
+        window.flutterWebRenderer = "auto";
+        var serviceWorkerVersion = "{{flutter_service_worker_version}}";
+    </script>
+    <script src="flutter.js" defer></script>
 
-    .loading {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: white;
-    }
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+          rel="stylesheet">
 
-    .logo {
-      width: 120px;
-      height: 120px;
-      object-fit: contain;
-      margin-bottom: 35px;
-      animation: fadeIn 2s ease-in-out;
-    }
+    <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: 'Poppins', sans-serif;
+          background: linear-gradient(135deg, #1e2a5e 0%, #2d4a8e 100%);
+          overflow: hidden;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
+        .loading {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          color: white;
+        }
 
-    /* حاوية الموجات */
-    .waves {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-    }
+        .logo {
+          width: 120px;
+          height: 120px;
+          object-fit: contain;
+          margin-bottom: 35px;
+          animation: fadeIn 2s ease-in-out;
+        }
 
-    /* الموجات */
-    .wave {
-      width: 6px;
-      height: 40px;
-      background: linear-gradient(90deg, #f4a261, #ffbe76);
-      margin: 0 4px;
-      border-radius: 3px;
-      animation: wave 1.2s infinite ease-in-out;
-    }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.9); }
+          to { opacity: 1; transform: scale(1); }
+        }
 
-    .wave:nth-child(2) { animation-delay: -1.1s; }
-    .wave:nth-child(3) { animation-delay: -1.0s; }
-    .wave:nth-child(4) { animation-delay: -0.9s; }
-    .wave:nth-child(5) { animation-delay: -0.8s; }
+        /* حاوية الموجات */
+        .waves {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+        }
 
-    @keyframes wave {
-      0%, 40%, 100% { transform: scaleY(0.4); }
-      20% { transform: scaleY(1.0); }
-    }
-  </style>
+        /* الموجات */
+        .wave {
+          width: 6px;
+          height: 40px;
+          background: linear-gradient(90deg, #f4a261, #ffbe76);
+          margin: 0 4px;
+          border-radius: 3px;
+          animation: wave 1.2s infinite ease-in-out;
+        }
+
+        .wave:nth-child(2) { animation-delay: -1.1s; }
+        .wave:nth-child(3) { animation-delay: -1.0s; }
+        .wave:nth-child(4) { animation-delay: -0.9s; }
+        .wave:nth-child(5) { animation-delay: -0.8s; }
+
+        @keyframes wave {
+          0%, 40%, 100% { transform: scaleY(0.4); }
+          20% { transform: scaleY(1.0); }
+        }
+    </style>
 </head>
 <body>
 <div id="loading" class="loading">
-  <img src="LOGO.jpg" alt="Gulf Sky Logo" class="logo">
-  <div class="waves">
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-  </div>
+    <img src="LOGO.jpg" alt="Gulf Sky Logo" class="logo">
+    <div class="waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 </div>
 
 <script>
-  window.addEventListener('load', function() {
-    _flutter.loader.loadEntrypoint({
-      serviceWorker: { serviceWorkerVersion: null },
-      onEntrypointLoaded: function(engineInitializer) {
-        engineInitializer.initializeEngine().then(function(appRunner) {
-          document.getElementById('loading').style.display = 'none';
-          appRunner.runApp();
-        });
-      }
+    window.addEventListener('load', function() {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: { serviceWorkerVersion: null },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            document.getElementById('loading').style.display = 'none';
+            appRunner.runApp();
+          });
+        }
+      });
     });
-  });
 </script>
 <script>
-  let deferredPrompt;
+    let deferredPrompt;
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    window.dispatchEvent(new Event('pwaInstallAvailable'));
-  });
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      window.dispatchEvent(new Event('pwaInstallAvailable'));
+    });
 
-  function showInstallPrompt() {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-      });
-    } else {
-      alert('The install prompt is not available right now.');
+    function showInstallPrompt() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        alert('The install prompt is not available right now.');
+      }
     }
-  }
 </script>
 
 </body>

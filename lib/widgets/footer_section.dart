@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gulfsky_complete_website/constants/app_strings.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -125,7 +124,7 @@ class FooterSection extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage('assets/images/LOGO.jpg')),
+                  image: const DecorationImage(image: AssetImage('assets/images/LOGO.jpg')),
                   color: AppColors.accentGold,
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
@@ -159,7 +158,7 @@ class FooterSection extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   color: AppColors.accentGold,
-                  image: DecorationImage(image: AssetImage('assets/images/LOGO.jpg')),
+                  image: const DecorationImage(image: AssetImage('assets/images/LOGO.jpg')),
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
@@ -317,7 +316,7 @@ class FooterSection extends StatelessWidget {
               .animate(delay: Duration(milliseconds: 400 + (index * 100)))
               .fadeIn(duration: 600.ms)
               .slideX(begin: languageProvider.isArabic ? 0.3 : -0.3);
-        }).toList(),
+        }),
       ],
     );
   }
@@ -432,7 +431,7 @@ class FooterSection extends StatelessWidget {
               .animate(delay: Duration(milliseconds: 500 + (index * 100)))
               .fadeIn(duration: 600.ms)
               .slideX(begin: languageProvider.isArabic ? 0.3 : -0.3);
-        }).toList(),
+        }),
       ],
     );
   }
@@ -518,7 +517,7 @@ class FooterSection extends StatelessWidget {
                 .animate(delay: Duration(milliseconds: 600 + (index * 100)))
                 .fadeIn(duration: 600.ms)
                 .slideX(begin: languageProvider.isArabic ? 0.3 : -0.3);
-          }).toList(),
+          }),
         ],
       ),
     );

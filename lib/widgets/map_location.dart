@@ -19,7 +19,7 @@ class _ContactMapState extends State<ContactMap> {
 
     if (kIsWeb) { const mapHTML = '''<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2522.9688928084615!2d55.38256954016116!3d25.323459568066312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5beb62018109%3A0xb49ea0a2563851a!2sAl%20Durrah%20Tower%20-%20First%20Floor%20-%20next%20to%20Al%20Buhaira%20Police%20station%20-%20Al%20Majaz%203%20-%20Al%20Majaz%20-%20Sharjah!5e1!3m2!1sen!2sae!4v1768716989958!5m2!1sen!2sae"
      width="100%" 
-     height="400" 
+     height="430" 
      style="border:2;" 
      allowfullscreen="" 
      loading="eager" 

@@ -254,7 +254,9 @@ flutter run -d web-server --web-port=8080 --web-hostname=0.0.0.0
 
 **© 2024 Gulf Sky Engineering Consultants. All rights reserved.**
 
-*Built with ❤️ using Flutter Web by Manus AI*
-#   g u l f s k y  
- #   g u l f s k y  
+*Built with ❤️ using Flutter Web by Eng. Naif*
+#   g u l f s k y 
+ 
+ #   g u l f s k y 
+ 
  

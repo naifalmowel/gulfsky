@@ -1,7 +1,7 @@
 {
     "name": "Gulf Sky Engineering Consultants",
     "short_name": "Gulf Sky",
-    "start_url": ".",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#1e2a5e",
     "theme_color": "#f4a261",

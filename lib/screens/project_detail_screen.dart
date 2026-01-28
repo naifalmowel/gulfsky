@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/app_colors.dart';
 import '../providers/language_provider.dart';
-import '../widgets/animated_navbar.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   final Map<String, dynamic> project;
@@ -46,7 +45,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         alignment: Alignment.topLeft,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: BackButton(color: Colors.black,onPressed: (){Navigator.of(context).pop();},),
+                          child: BackButton(
+                            color: Colors.black,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
                         )),
                     _buildProjectHeader(context),
                     _buildProjectGallery(context),
@@ -58,7 +62,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                   ],
                 ),
               ),
-
             ],
           ),
         );
@@ -69,7 +72,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   Widget _buildProjectHeader(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    
+
     return Container(
       height: isDesktop ? 400 : 300,
       decoration: BoxDecoration(
@@ -77,8 +80,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            widget.project['color'].withOpacity(0.9),
-            widget.project['color'].withOpacity(0.7),
+            (widget.project['color'] as Color? ?? AppColors.primaryBlue)
+                .withOpacity(0.9),
+            (widget.project['color'] as Color? ?? AppColors.primaryBlue)
+                .withOpacity(0.7),
           ],
         ),
       ),
@@ -109,7 +114,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               ),
             ),
           ),
-          
+
           // Content
           Center(
             child: Padding(
@@ -126,7 +131,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Icon(
-                      widget.project['icon'],
+                      widget.project['icon'] as IconData? ?? Icons.architecture,
                       size: 50,
                       color: Colors.white,
                     ),
@@ -134,12 +139,11 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       .animate()
                       .scale(begin: const Offset(0.5, 0.5), duration: 800.ms)
                       .fadeIn(duration: 600.ms),
-                  
+
                   const SizedBox(height: 30),
-                  
-                  // Project Title
+
                   Text(
-                    widget.project['title'],
+                    widget.project['title'] ?? '',
                     style: TextStyle(
                       fontSize: isDesktop ? 42 : 32,
                       fontWeight: FontWeight.bold,
@@ -150,15 +154,16 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       .animate(delay: 300.ms)
                       .fadeIn(duration: 800.ms)
                       .slideY(begin: 0.3),
-                  
+
                   const SizedBox(height: 20),
-                  
+
                   // Project Location & Type
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
@@ -166,25 +171,29 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.location_on, color: Colors.white, size: 16),
+                            const Icon(Icons.location_on,
+                                color: Colors.white, size: 16),
                             const SizedBox(width: 5),
                             Text(
-                              widget.project['location'],
-                              style: const TextStyle(color: Colors.white, fontSize: 14),
+                              widget.project['location'] ?? '',
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 14),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(width: 15),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          widget.project['type'],
-                          style: const TextStyle(color: Colors.white, fontSize: 14),
+                          widget.project['type'] ?? '',
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 14),
                         ),
                       ),
                     ],
@@ -205,7 +214,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
     final images = _getProjectImages(widget.project['title']);
-    
+
     return Container(
       height: isDesktop ? 500 : 300,
       margin: EdgeInsets.symmetric(
@@ -280,7 +289,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                 );
               },
             ),
-            
+
             // Navigation Arrows
             if (isDesktop) ...[
               Positioned(
@@ -297,7 +306,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                             );
                           }
                         : null,
-                    icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 30),
+                    icon: const Icon(Icons.arrow_back_ios,
+                        color: Colors.white, size: 30),
                   ),
                 ),
               ),
@@ -315,12 +325,13 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                             );
                           }
                         : null,
-                    icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 30),
+                    icon: const Icon(Icons.arrow_forward_ios,
+                        color: Colors.white, size: 30),
                   ),
                 ),
               ),
             ],
-            
+
             // Page Indicators
             Positioned(
               bottom: 20,
@@ -346,16 +357,13 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           ],
         ),
       ),
-    )
-        .animate(delay: 200.ms)
-        .fadeIn(duration: 800.ms)
-        .slideY(begin: 0.3);
+    ).animate(delay: 200.ms).fadeIn(duration: 800.ms).slideY(begin: 0.3);
   }
 
   Widget _buildProjectInfo(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 80 : 20,
@@ -371,12 +379,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               fontWeight: FontWeight.bold,
               color: AppColors.primaryBlue,
             ),
-          )
-              .animate(delay: 200.ms)
-              .fadeIn(duration: 800.ms),
-          
+          ).animate(delay: 200.ms).fadeIn(duration: 800.ms),
           const SizedBox(height: 30),
-          
           Container(
             width: 80,
             height: 4,
@@ -384,23 +388,17 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               color: widget.project['color'],
               borderRadius: BorderRadius.circular(2),
             ),
-          )
-              .animate(delay: 400.ms)
-              .scaleX(begin: 0, duration: 600.ms),
-          
+          ).animate(delay: 400.ms).scaleX(begin: 0, duration: 600.ms),
           const SizedBox(height: 40),
-          
           Text(
-            widget.project['description'],
+            widget.project['description'] ?? '',
             style: TextStyle(
               fontSize: isDesktop ? 16 : 14,
               color: AppColors.darkGray,
               height: 1.8,
             ),
             textAlign: TextAlign.justify,
-          )
-              .animate(delay: 600.ms)
-              .fadeIn(duration: 800.ms),
+          ).animate(delay: 600.ms).fadeIn(duration: 800.ms),
         ],
       ),
     );
@@ -410,7 +408,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
     final details = _getProjectDetails(widget.project);
-    
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 80 : 20,
@@ -428,23 +426,20 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               fontWeight: FontWeight.bold,
               color: AppColors.primaryBlue,
             ),
-          )
-              .animate(delay: 200.ms)
-              .fadeIn(duration: 800.ms),
-          
+          ).animate(delay: 200.ms).fadeIn(duration: 800.ms),
           const SizedBox(height: 50),
-          
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: isDesktop ? 3 : 1,
             crossAxisSpacing: 30,
             mainAxisSpacing: 30,
-            childAspectRatio: isDesktop ? size.width*0.001 : size.width*0.003,
+            childAspectRatio:
+                isDesktop ? size.width * 0.001 : size.width * 0.003,
             children: details.asMap().entries.map((entry) {
               int index = entry.key;
               Map<String, dynamic> detail = entry.value;
-              
+
               return Container(
                 padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
@@ -511,7 +506,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
     final specs = _getProjectSpecs(widget.project);
-    
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 80 : 20,
@@ -526,16 +521,12 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               fontWeight: FontWeight.bold,
               color: AppColors.primaryBlue,
             ),
-          )
-              .animate(delay: 200.ms)
-              .fadeIn(duration: 800.ms),
-          
+          ).animate(delay: 200.ms).fadeIn(duration: 800.ms),
           const SizedBox(height: 50),
-          
           ...specs.asMap().entries.map((entry) {
             int index = entry.key;
             Map<String, dynamic> spec = entry.value;
-            
+
             return Container(
               margin: const EdgeInsets.only(bottom: 20),
               padding: const EdgeInsets.all(20),
@@ -576,7 +567,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                 .animate(delay: Duration(milliseconds: 300 + (index * 100)))
                 .fadeIn(duration: 600.ms)
                 .slideX(begin: -0.3);
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -585,7 +576,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   Widget _buildRelatedProjects(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isDesktop ? 80 : 20,
@@ -611,12 +602,8 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
               color: AppColors.primaryBlue,
             ),
             textAlign: TextAlign.center,
-          )
-              .animate(delay: 200.ms)
-              .fadeIn(duration: 800.ms),
-          
+          ).animate(delay: 200.ms).fadeIn(duration: 800.ms),
           const SizedBox(height: 40),
-          
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -651,9 +638,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                   ],
                 ),
               ),
-              
               const SizedBox(width: 20),
-              
               OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -745,7 +730,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
     switch (project['type']) {
       case 'Residential':
         return [
-          {'title': 'Building Type', 'value': 'Multi-story Residential Complex'},
+          {
+            'title': 'Building Type',
+            'value': 'Multi-story Residential Complex'
+          },
           {'title': 'Number of Units', 'value': '120 Apartments'},
           {'title': 'Parking Spaces', 'value': '150 Covered Parking'},
           {'title': 'Amenities', 'value': 'Swimming Pool, Gym, Garden'},
@@ -768,7 +756,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
           {'title': 'Commercial Space', 'value': '3,000 sqm Retail'},
           {'title': 'Office Space', 'value': '2,000 sqm Office'},
           {'title': 'Parking', 'value': '200 Multi-level Parking'},
-          {'title': 'Green Features', 'value': 'Solar Panels, Rainwater Harvesting'},
+          {
+            'title': 'Green Features',
+            'value': 'Solar Panels, Rainwater Harvesting'
+          },
         ];
       default:
         return [

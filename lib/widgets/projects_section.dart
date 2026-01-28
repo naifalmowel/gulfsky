@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gulfsky_complete_website/widgets/reload_image.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../constants/app_colors.dart';
 import '../providers/language_provider.dart';
+import 'reload_image.dart';
 
 class ProjectsSection extends StatefulWidget {
   const ProjectsSection({super.key});
@@ -73,14 +72,14 @@ class _ProjectsSectionState extends State<ProjectsSection>
               children: [
                 // Section Title
                 _buildSectionTitle(languageProvider, isDesktop),
-                
+
                 const SizedBox(height: 60),
-                
+
                 // Projects Grid
-                _buildProjectsGrid(languageProvider, isDesktop , isTab),
-                
+                _buildProjectsGrid(languageProvider, isDesktop, isTab),
+
                 const SizedBox(height: 50),
-                
+
                 // View All Projects Button
                 _buildViewAllButton(languageProvider),
               ],
@@ -102,13 +101,8 @@ class _ProjectsSectionState extends State<ProjectsSection>
             color: AppColors.primaryBlue,
           ),
           textAlign: TextAlign.center,
-        )
-            .animate()
-            .fadeIn(duration: 800.ms)
-            .slideY(begin: 0.3),
-        
+        ).animate().fadeIn(duration: 800.ms).slideY(begin: 0.3),
         const SizedBox(height: 10),
-        
         Container(
           width: 100,
           height: 4,
@@ -116,12 +110,8 @@ class _ProjectsSectionState extends State<ProjectsSection>
             color: AppColors.accentGold,
             borderRadius: BorderRadius.circular(2),
           ),
-        )
-            .animate(delay: 300.ms)
-            .scaleX(begin: 0, duration: 600.ms),
-        
+        ).animate(delay: 300.ms).scaleX(begin: 0, duration: 600.ms),
         const SizedBox(height: 20),
-        
         Text(
           languageProvider.getString('projects_subtitle'),
           style: TextStyle(
@@ -130,12 +120,8 @@ class _ProjectsSectionState extends State<ProjectsSection>
             fontWeight: FontWeight.w500,
           ),
           textAlign: TextAlign.center,
-        )
-            .animate(delay: 500.ms)
-            .fadeIn(duration: 800.ms),
-        
+        ).animate(delay: 500.ms).fadeIn(duration: 800.ms),
         const SizedBox(height: 30),
-        
         Padding(
           padding: EdgeInsets.symmetric(horizontal: isDesktop ? 100 : 0),
           child: Text(
@@ -147,14 +133,13 @@ class _ProjectsSectionState extends State<ProjectsSection>
             ),
             textAlign: TextAlign.center,
           ),
-        )
-            .animate(delay: 700.ms)
-            .fadeIn(duration: 800.ms),
+        ).animate(delay: 700.ms).fadeIn(duration: 800.ms),
       ],
     );
   }
 
-  Widget _buildProjectsGrid(LanguageProvider languageProvider, bool isDesktop , bool isTab) {
+  Widget _buildProjectsGrid(
+      LanguageProvider languageProvider, bool isDesktop, bool isTab) {
     const url = 'https://cdn.jsdelivr.net/gh/naifizo/gulfsky-images/projects';
     final projects = [
       {
@@ -164,7 +149,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
         'area': '50,000 sqm',
         'year': '2023',
         'color': AppColors.architecturalColor,
-        'image' : '$url/Tower/GS19.jpg'
+        'image': '$url/Tower/GS19.jpg',
+        'icon': Icons.apartment,
+        'description':
+            'A prestigious residential tower project in Al Khan, Sharjah, featuring modern amenities and high-end finishes across 33 typical floors.',
       },
       {
         'title': ' G + 5P + H.C + 25TYP + 1Tec + H.P',
@@ -173,7 +161,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
         'area': '25,000 sqm',
         'year': '2022',
         'color': AppColors.constructionColor,
-        'image' : '$url/Tower/GS105.jpg'
+        'image': '$url/Tower/GS105.jpg',
+        'icon': Icons.business,
+        'description':
+            'A major commercial development integrated with technical floors and helicopter pad, designed for maximum efficiency.',
       },
       {
         'title': 'G + 3P + H.C + SERV. + 15TYP',
@@ -182,7 +173,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
         'area': '75,000 sqm',
         'year': '2024',
         'color': AppColors.consultingColor,
-        'image' : '$url/Hotels/GS48.jpg'
+        'image': '$url/Hotels/GS48.jpg',
+        'icon': Icons.hotel,
+        'description':
+            'Luxury hotel project with comprehensive service areas and health club, setting new standards in hospitality.',
       },
       {
         'title': '8 VILLAS G + 1 FLOOR',
@@ -191,7 +185,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
         'area': '30,000 sqm',
         'year': '2023',
         'color': AppColors.approvalColor,
-        'image' : '$url/Villas/GS2221.jpg'
+        'image': '$url/Villas/GS2221.jpg',
+        'icon': Icons.home,
+        'description':
+            'Exclusive villa complex consisting of 8 luxury units, each designed with privacy and modern living in mind.',
       },
       {
         'title': 'G ONLY',
@@ -200,7 +197,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
         'area': '40,000 sqm',
         'year': '2022',
         'color': AppColors.primaryBlue,
-        'image' : '$url/Education/GS100.jpg'
+        'image': '$url/Education/GS100.jpg',
+        'icon': Icons.school,
+        'description':
+            'Modern educational facility designed to provide an optimal learning environment with integrated safety features.',
       },
       {
         'title': 'G + 3P + SERV. + REST. + H.C + 15TYP + S.P',
@@ -209,7 +209,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
         'area': '35,000 sqm',
         'year': '2024',
         'color': AppColors.accentGold,
-        'image' : '$url/Interior/Flat%2007%20a.jpg'
+        'image': '$url/Interior/Flat%2007%20a.jpg',
+        'icon': Icons.brush,
+        'description':
+            'Comprehensive interior design and architectural project for a mixed-use building featuring luxury amenities.',
       },
     ];
     final screenWidth = MediaQuery.of(context).size.width;
@@ -223,10 +226,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
     } else if (screenWidth >= 800) {
       crossAxisCount = 3;
       childAspectRatio = 0.55;
-    }  else if (screenWidth >= 600) {
+    } else if (screenWidth >= 600) {
       crossAxisCount = 2;
       childAspectRatio = 0.7;
-    }else {
+    } else {
       crossAxisCount = 2;
       childAspectRatio = 0.38;
     }
@@ -248,10 +251,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
   }
 
   Widget _buildProjectCard(
-      Map<String, dynamic> project,
-      int index,
-      bool isDesktop,
-      ) {
+    Map<String, dynamic> project,
+    int index,
+    bool isDesktop,
+  ) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
@@ -278,13 +281,15 @@ class _ProjectsSectionState extends State<ProjectsSection>
             onExit: (_) => setState(() => _hoveredIndex = -1),
             child: GestureDetector(
               onTap: () {
-                _showProjectImageDialog(context, project);
+                Navigator.of(context).pushNamed(
+                  '/project-detail',
+                  arguments: project,
+                );
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeOut,
-                transform: Matrix4.identity()
-                  ..scale(isHovered ? 1.03 : 1.0),
+                transform: Matrix4.identity()..scale(isHovered ? 1.03 : 1.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(22),
@@ -310,12 +315,14 @@ class _ProjectsSectionState extends State<ProjectsSection>
                           fit: StackFit.expand,
                           children: [
                             /// الصورة الرئيسية – قص ذكي بدون تشويه
-                            Image.network(
-                              project['image'],
+                            ReloadableImage(
+                              key: ValueKey(
+                                  '${project['image']}_${project['title']}_$index'),
+                              imageUrl: project['image'],
                               fit: BoxFit.cover,
-                              alignment: Alignment.center,
+                              color: project['color'],
                             ),
-              
+
                             /// تدرج خفيف لإخفاء أي قص قاسي
                             Container(
                               decoration: BoxDecoration(
@@ -333,7 +340,7 @@ class _ProjectsSectionState extends State<ProjectsSection>
                         ),
                       ),
                     ),
-              
+
                     /// ================= DETAILS SECTION =================
                     Expanded(
                       flex: 2,
@@ -353,9 +360,9 @@ class _ProjectsSectionState extends State<ProjectsSection>
                                 color: AppColors.primaryBlue,
                               ),
                             ),
-              
+
                             const SizedBox(height: 6),
-              
+
                             /// LOCATION
                             Row(
                               children: [
@@ -378,9 +385,9 @@ class _ProjectsSectionState extends State<ProjectsSection>
                                 ),
                               ],
                             ),
-              
+
                             const Spacer(),
-              
+
                             /// TYPE BADGE – Elegant / Minimal
                             Container(
                               padding: const EdgeInsets.symmetric(
@@ -417,9 +424,9 @@ class _ProjectsSectionState extends State<ProjectsSection>
   }
 
   void _showProjectImageDialog(
-      BuildContext context,
-      Map<String, dynamic> project,
-      ) {
+    BuildContext context,
+    Map<String, dynamic> project,
+  ) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -436,9 +443,11 @@ class _ProjectsSectionState extends State<ProjectsSection>
                 child: InteractiveViewer(
                   minScale: 1,
                   maxScale: 4,
-                  child: Image.network(
-                    project['image'],
+                  child: ReloadableImage(
+                    key: ValueKey(project['image']),
+                    imageUrl: project['image'],
                     fit: BoxFit.contain,
+                    color: project['color'],
                   ),
                 ),
               ),
@@ -470,26 +479,10 @@ class _ProjectsSectionState extends State<ProjectsSection>
     );
   }
 
-
-  IconData _getProjectIcon(String type) {
-    switch (type) {
-      case 'Residential':
-        return Icons.home;
-      case 'Commercial':
-        return Icons.business;
-      case 'Mixed Use':
-        return Icons.apartment;
-      case 'Hospitality':
-        return Icons.hotel;
-      default:
-        return Icons.architecture;
-    }
-  }
-
   Widget _buildViewAllButton(LanguageProvider languageProvider) {
     return ElevatedButton(
       onPressed: () {
-Navigator.of(context).pushNamed('/projects');
+        Navigator.of(context).pushNamed('/projects');
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.accentGold,
@@ -501,7 +494,7 @@ Navigator.of(context).pushNamed('/projects');
         elevation: 10,
         shadowColor: AppColors.accentGold.withOpacity(0.3),
       ),
-      child:  Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(

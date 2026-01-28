@@ -13,7 +13,8 @@ class ReloadableImage extends StatefulWidget {
     required this.imageUrl,
     this.height,
     this.width,
-    this.fit = BoxFit.cover, required this.color,
+    this.fit = BoxFit.cover,
+    required this.color,
   });
 
   @override
@@ -22,7 +23,6 @@ class ReloadableImage extends StatefulWidget {
 
 class _ReloadableImageState extends State<ReloadableImage> {
   late String _url;
-  bool _reloadRequested = false;
 
   @override
   void initState() {
@@ -30,9 +30,19 @@ class _ReloadableImageState extends State<ReloadableImage> {
     _url = widget.imageUrl;
   }
 
+  @override
+  void didUpdateWidget(ReloadableImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // إذا تغيّر الـ imageUrl، نقوم بتحديث الـ url لكسر الـ cache
+    if (oldWidget.imageUrl != widget.imageUrl) {
+      setState(() {
+        _url = widget.imageUrl;
+      });
+    }
+  }
+
   void _reloadImage() {
     setState(() {
-      _reloadRequested = true;
       // نضيف قيمة زمنية بسيطة لكسر الكاش
       _url = "${widget.imageUrl}?v=${DateTime.now().millisecondsSinceEpoch}";
     });
@@ -45,33 +55,35 @@ class _ReloadableImageState extends State<ReloadableImage> {
       width: widget.width,
       height: widget.height,
       fit: widget.fit,
-      placeholder: (context, url) =>  Center(
-        child: CircularProgressIndicator(color: widget.color,),
+      placeholder: (context, url) => Center(
+        child: CircularProgressIndicator(
+          color: widget.color,
+        ),
       ),
       errorWidget: (context, url, error) {
         return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.broken_image, color: Colors.grey, size: 40),
-            const SizedBox(height: 6),
-            ElevatedButton.icon(
-              onPressed: _reloadImage,
-              icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('Retry'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: widget.color,
-                foregroundColor: Colors.white,
-                padding:
-                const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.broken_image, color: Colors.grey, size: 40),
+              const SizedBox(height: 6),
+              ElevatedButton.icon(
+                onPressed: _reloadImage,
+                icon: const Icon(Icons.refresh, size: 18),
+                label: const Text('Retry'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: widget.color,
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      );
+            ],
+          ),
+        );
       },
       fadeInDuration: const Duration(milliseconds: 400),
     );
