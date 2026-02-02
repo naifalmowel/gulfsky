@@ -577,8 +577,8 @@ class _ContactSectionState extends State<ContactSection>
     required String message,
   }) async {
     const serviceId = 'service_nftblpr';
-    const templateId = 'template_398o9b9';
-    const publicKey = 'xcKlcq275OeQg_1Ej';
+    const templateId = 'template_398o9'; //b9
+    const publicKey = 'xcKlcq275OeQg_1'; //Ej
 
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
     final response = await http.post(
