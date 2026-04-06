@@ -82,7 +82,7 @@ class ScrollProvider extends ChangeNotifier {
     if (_isScrolling || !_isInitialized) return;
 
     // Validate section index
-    if (sectionIndex < 0 || sectionIndex > 5) {
+    if (sectionIndex < 0 || sectionIndex > 7) {
       debugPrint('Invalid section index: $sectionIndex');
       return;
     }

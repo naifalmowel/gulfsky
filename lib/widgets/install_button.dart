@@ -1,5 +1,4 @@
 import 'dart:html' as html;
-import 'package:js/js_util.dart' as js_util;
 import 'package:flutter/material.dart';
 
 class InstallAppButton extends StatefulWidget {
@@ -25,7 +24,7 @@ class _InstallAppButtonState extends State<InstallAppButton> {
   }
 
   void _installApp() {
-    js_util.callMethod(html.window, 'showInstallPrompt', []);
+    // js_util.callMethod(html.window, 'showInstallPrompt', []);
   }
 
   @override

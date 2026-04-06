@@ -15,7 +15,7 @@ class FooterSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    
+
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Consumer<LanguageProvider>(
@@ -30,7 +30,7 @@ class FooterSection extends StatelessWidget {
               children: [
                 // Main Footer Content
                 if (isDesktop)
-                  _buildDesktopFooter(languageProvider , context)
+                  _buildDesktopFooter(languageProvider, context)
                 else
                   _buildMobileFooter(languageProvider, context),
 
@@ -54,7 +54,8 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopFooter(LanguageProvider languageProvider , BuildContext context) {
+  Widget _buildDesktopFooter(
+      LanguageProvider languageProvider, BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -63,22 +64,22 @@ class FooterSection extends StatelessWidget {
           flex: 2,
           child: _buildCompanyInfo(languageProvider),
         ),
-        
+
         // Quick Links
         Expanded(
           flex: 1,
           child: Padding(
             padding: const EdgeInsets.only(left: 16),
-            child: _buildQuickLinks(languageProvider , context),
+            child: _buildQuickLinks(languageProvider, context),
           ),
         ),
-        
+
         // Services
         Expanded(
           flex: 1,
-          child: _buildServicesLinks(languageProvider , context ),
+          child: _buildServicesLinks(languageProvider, context),
         ),
-        
+
         // Contact Info
         Expanded(
           flex: 1,
@@ -88,17 +89,19 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildMobileFooter(LanguageProvider languageProvider , BuildContext context) {
+  Widget _buildMobileFooter(
+      LanguageProvider languageProvider, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildCompanyInfo(languageProvider),
         const SizedBox(height: 40),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: _buildQuickLinks(languageProvider , context)),
+            Expanded(child: _buildQuickLinks(languageProvider, context)),
             const SizedBox(width: 30),
-            Expanded(child: _buildServicesLinks(languageProvider,context)),
+            Expanded(child: _buildServicesLinks(languageProvider, context)),
           ],
         ),
         const SizedBox(height: 40),
@@ -109,14 +112,14 @@ class FooterSection extends StatelessWidget {
 
   Widget _buildCompanyInfo(LanguageProvider languageProvider) {
     return Column(
-      crossAxisAlignment: languageProvider.isArabic 
-          ? CrossAxisAlignment.end 
+      crossAxisAlignment: languageProvider.isArabic
+          ? CrossAxisAlignment.end
           : CrossAxisAlignment.start,
       children: [
         // Logo and Company Name
         Row(
-          mainAxisAlignment: languageProvider.isArabic 
-              ? MainAxisAlignment.end 
+          mainAxisAlignment: languageProvider.isArabic
+              ? MainAxisAlignment.end
               : MainAxisAlignment.start,
           children: [
             if (!languageProvider.isArabic) ...[
@@ -124,7 +127,8 @@ class FooterSection extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  image: const DecorationImage(image: AssetImage('assets/images/LOGO.jpg')),
+                  image: const DecorationImage(
+                      image: AssetImage('assets/images/LOGO.jpg')),
                   color: AppColors.accentGold,
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
@@ -146,8 +150,8 @@ class FooterSection extends StatelessWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
-                textAlign: languageProvider.isArabic 
-                    ? TextAlign.right 
+                textAlign: languageProvider.isArabic
+                    ? TextAlign.right
                     : TextAlign.left,
               ),
             ),
@@ -158,7 +162,8 @@ class FooterSection extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   color: AppColors.accentGold,
-                  image: const DecorationImage(image: AssetImage('assets/images/LOGO.jpg')),
+                  image: const DecorationImage(
+                      image: AssetImage('assets/images/LOGO.jpg')),
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
@@ -168,17 +173,13 @@ class FooterSection extends StatelessWidget {
                     ),
                   ],
                 ),
-
               ),
             ],
           ],
-        )
-            .animate()
-            .fadeIn(duration: 800.ms)
-            .slideY(begin: 0.3),
-        
+        ).animate().fadeIn(duration: 800.ms).slideY(begin: 0.3),
+
         const SizedBox(height: 20),
-        
+
         // Description
         Text(
           languageProvider.getString('footer_description'),
@@ -187,54 +188,57 @@ class FooterSection extends StatelessWidget {
             fontSize: 13,
             height: 1.6,
           ),
-          textAlign: languageProvider.isArabic 
-              ? TextAlign.right 
-              : TextAlign.left,
-        )
-            .animate(delay: 200.ms)
-            .fadeIn(duration: 800.ms),
-        
+          textAlign:
+              languageProvider.isArabic ? TextAlign.right : TextAlign.left,
+        ).animate(delay: 200.ms).fadeIn(duration: 800.ms),
+
         const SizedBox(height: 20),
-        
+
         // Social Media Icons
         Row(
-          mainAxisAlignment: languageProvider.isArabic 
-              ? MainAxisAlignment.end 
+          mainAxisAlignment: languageProvider.isArabic
+              ? MainAxisAlignment.end
               : MainAxisAlignment.start,
           children: [
-            _buildSocialIcon(Icons.facebook, 'Facebook' , ()async{
+            _buildSocialIcon(Icons.facebook, 'Facebook', () async {
               if (!await launchUrl(
-              Uri.parse('https://www.facebook.com/GULFSKYENGINEERINGCONSULTANTS/'),
-              mode: LaunchMode.externalApplication,
+                Uri.parse(
+                    'https://www.facebook.com/GULFSKYENGINEERINGCONSULTANTS/'),
+                mode: LaunchMode.externalApplication,
               )) {
-              throw Exception('Could not launch ${Uri.parse('https://www.facebook.com/GULFSKYENGINEERINGCONSULTANTS/')}');
+                throw Exception(
+                    'Could not launch ${Uri.parse('https://www.facebook.com/GULFSKYENGINEERINGCONSULTANTS/')}');
               }
             }),
             const SizedBox(width: 15),
-            _buildSocialIcon(FontAwesomeIcons.linkedin, 'LinkedIn' , ()async{
+            _buildSocialIcon(FontAwesomeIcons.linkedin, 'LinkedIn', () async {
               if (!await launchUrl(
                 Uri.parse('https://ae.linkedin.com/company/gulf-sky-group/'),
                 mode: LaunchMode.externalApplication,
               )) {
-                throw Exception('Could not launch ${Uri.parse('https://ae.linkedin.com/company/gulf-sky-group/')}');
+                throw Exception(
+                    'Could not launch ${Uri.parse('https://ae.linkedin.com/company/gulf-sky-group/')}');
               }
             }),
             const SizedBox(width: 15),
-            _buildSocialIcon(FontAwesomeIcons.whatsapp, 'WhatsApp' , ()async{
+            _buildSocialIcon(FontAwesomeIcons.whatsapp, 'WhatsApp', () async {
               if (!await launchUrl(
-                Uri.parse('https://wa.me/971544839559?text=مرحبًا،%20أود%20الاستفسار%20عن%20خدماتكم.'),
+                Uri.parse(
+                    'https://wa.me/971544839559?text=مرحبًا،%20أود%20الاستفسار%20عن%20خدماتكم.'),
                 mode: LaunchMode.externalApplication,
               )) {
-                throw Exception('Could not launch ${Uri.parse('https://wa.me/971544839559')}');
+                throw Exception(
+                    'Could not launch ${Uri.parse('https://wa.me/971544839559')}');
               }
             }),
             const SizedBox(width: 15),
-            _buildSocialIcon(FontAwesomeIcons.globe, 'Website' , ()async{
+            _buildSocialIcon(FontAwesomeIcons.globe, 'Website', () async {
               if (!await launchUrl(
                 Uri.parse('https://www.gulfskygroup.com'),
                 mode: LaunchMode.externalApplication,
               )) {
-                throw Exception('Could not launch ${Uri.parse('https://www.gulfskygroup.com')}');
+                throw Exception(
+                    'Could not launch ${Uri.parse('https://www.gulfskygroup.com')}');
               }
             }),
           ],
@@ -245,9 +249,10 @@ class FooterSection extends StatelessWidget {
       ],
     );
   }
-  Widget _buildSocialIcon(IconData icon, String platform ,Function()? onTap) {
+
+  Widget _buildSocialIcon(IconData icon, String platform, Function()? onTap) {
     return InkWell(
-      onTap:onTap,
+      onTap: onTap,
       borderRadius: BorderRadius.circular(20),
       child: Container(
         width: 40,
@@ -268,10 +273,13 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickLinks(LanguageProvider languageProvider , BuildContext context) {
+  Widget _buildQuickLinks(
+      LanguageProvider languageProvider, BuildContext context) {
     final links = [
       languageProvider.getString('nav_home'),
       languageProvider.getString('nav_about'),
+      languageProvider.getString('nav_founder'),
+      languageProvider.getString('nav_vision1'),
       languageProvider.getString('nav_services'),
       languageProvider.getString('nav_projects'),
       languageProvider.getString('nav_contact'),
@@ -289,12 +297,8 @@ class FooterSection extends StatelessWidget {
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
-        )
-            .animate()
-            .fadeIn(duration: 800.ms, delay: 300.ms),
-
+        ).animate().fadeIn(duration: 800.ms, delay: 300.ms),
         const SizedBox(height: 20),
-
         ...links.asMap().entries.map((entry) {
           int index = entry.key;
           String link = entry.value;
@@ -302,53 +306,43 @@ class FooterSection extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 12),
             child: InkWell(
               onTap: () {
-                _scrollToSection(context, index);
+                final scrollProvider =
+                    Provider.of<ScrollProvider>(context, listen: false);
+                if (scrollProvider.isControllerReady) {
+                  scrollProvider.scrollToSection(index);
+                }
               },
-              child: Text(
-                link,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.8),
-                  fontSize: 14,
-                ),
+              child: Row(
+                mainAxisAlignment: languageProvider.isArabic
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
+                children: [
+                  Text(
+                    link,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Icon(
+                    Icons.arrow_forward,
+                    size: 16,
+                    color: AppColors.accentGold.withOpacity(0.6),
+                  ),
+                ],
               ),
             ),
           )
               .animate(delay: Duration(milliseconds: 400 + (index * 100)))
-              .fadeIn(duration: 600.ms)
-              .slideX(begin: languageProvider.isArabic ? 0.3 : -0.3);
+              .fadeIn(duration: 600.ms);
         }),
       ],
     );
   }
-  void _scrollToSection(BuildContext context, int sectionIndex) {
-    final scrollProvider = Provider.of<ScrollProvider>(context, listen: false);
 
-    // Check if we're on the home page
-    if (ModalRoute.of(context)?.settings.name == '/') {
-      // Only scroll if the controller is ready
-      if (scrollProvider.isControllerReady) {
-        scrollProvider.scrollToSection(sectionIndex);
-      } else {
-        // Wait for controller to be ready
-        Future.delayed(const Duration(milliseconds: 300), () {
-          if (scrollProvider.isControllerReady) {
-            scrollProvider.scrollToSection(sectionIndex);
-          }
-        });
-      }
-    } else {
-      // Navigate to home page first, then scroll
-      Navigator.of(context).pushReplacementNamed('/').then((_) {
-        Future.delayed(const Duration(milliseconds: 300), () {
-          if (scrollProvider.isControllerReady) {
-            scrollProvider.scrollToSection(sectionIndex);
-          }
-        });
-      });
-    }
-  }
-  Widget _buildServicesLinks(LanguageProvider languageProvider, BuildContext context) {
-
+  Widget _buildServicesLinks(
+      LanguageProvider languageProvider, BuildContext context) {
     final services = [
       {
         'title': languageProvider.getString('service_architectural_title'),
@@ -380,8 +374,8 @@ class FooterSection extends StatelessWidget {
       },
     ];
     return Column(
-      crossAxisAlignment: languageProvider.isArabic 
-          ? CrossAxisAlignment.end 
+      crossAxisAlignment: languageProvider.isArabic
+          ? CrossAxisAlignment.end
           : CrossAxisAlignment.start,
       children: [
         Text(
@@ -391,10 +385,7 @@ class FooterSection extends StatelessWidget {
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
-        )
-            .animate()
-            .fadeIn(duration: 800.ms, delay: 400.ms),
-        
+        ).animate().fadeIn(duration: 800.ms, delay: 400.ms),
         const SizedBox(height: 20),
         ...services.asMap().entries.map((entry) {
           int index = entry.key;
@@ -408,9 +399,11 @@ class FooterSection extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => ServiceDetailScreen(
                       service: {
-                        'title': service['title'].toString(), // مثل: 'Architectural Design'
+                        'title': service['title']
+                            .toString(), // مثل: 'Architectural Design'
                         'description': service['description'].toString(),
-                        'type': service['title'].toString(), // مثل: 'Architectural Design'
+                        'type': service['title']
+                            .toString(), // مثل: 'Architectural Design'
                         'icon': service['icon'] as IconData, // أيقونة الخدمة
                         'color': service['color'] as Color, // لون الخدمة
                         'image': service['image'].toString(), // لون الخدمة
@@ -470,12 +463,8 @@ class FooterSection extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
-          )
-              .animate()
-              .fadeIn(duration: 800.ms, delay: 500.ms),
-
+          ).animate().fadeIn(duration: 800.ms, delay: 500.ms),
           const SizedBox(height: 20),
-
           ...contactItems.asMap().entries.map((entry) {
             int index = entry.key;
             Map<String, dynamic> item = entry.value;
@@ -523,7 +512,8 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomSection(LanguageProvider languageProvider, bool isDesktop) {
+  Widget _buildBottomSection(
+      LanguageProvider languageProvider, bool isDesktop) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -538,8 +528,6 @@ class FooterSection extends StatelessWidget {
           ),
         ),
       ],
-    )
-        .animate(delay: 800.ms)
-        .fadeIn(duration: 800.ms);
+    ).animate(delay: 800.ms).fadeIn(duration: 800.ms);
   }
 }

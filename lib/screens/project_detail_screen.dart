@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/app_colors.dart';
 import '../providers/language_provider.dart';
+import '../widgets/reload_image.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   final Map<String, dynamic> project;
@@ -14,7 +15,6 @@ class ProjectDetailScreen extends StatefulWidget {
 }
 
 class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
-  int _currentImageIndex = 0;
   late PageController _pageController;
 
   @override
@@ -213,7 +213,34 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
   Widget _buildProjectGallery(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    final images = _getProjectImages(widget.project['title']);
+    final projectImage = widget.project['image'] ?? '';
+
+    if (projectImage.isEmpty) {
+      return Container(
+        height: isDesktop ? 500 : 300,
+        margin: EdgeInsets.symmetric(
+          horizontal: isDesktop ? 80 : 20,
+          vertical: 40,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.image_not_supported, size: 60, color: Colors.grey),
+              SizedBox(height: 16),
+              Text(
+                'No Image Available',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+            ],
+          ),
+        ),
+      ).animate(delay: 200.ms).fadeIn(duration: 800.ms).slideY(begin: 0.3);
+    }
 
     return Container(
       height: isDesktop ? 500 : 300,
@@ -223,138 +250,20 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.transparent,
             blurRadius: 20,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: Stack(
-          children: [
-            // Image Gallery
-            PageView.builder(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentImageIndex = index;
-                });
-              },
-              itemCount: images.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        widget.project['color'].withOpacity(0.8),
-                        widget.project['color'].withOpacity(0.6),
-                      ],
-                    ),
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          images[index]['icon'],
-                          size: isDesktop ? 120 : 80,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          images[index]['title'],
-                          style: TextStyle(
-                            fontSize: isDesktop ? 24 : 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          images[index]['description'],
-                          style: TextStyle(
-                            fontSize: isDesktop ? 16 : 14,
-                            color: Colors.white.withOpacity(0.9),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-
-            // Navigation Arrows
-            if (isDesktop) ...[
-              Positioned(
-                left: 20,
-                top: 0,
-                bottom: 0,
-                child: Center(
-                  child: IconButton(
-                    onPressed: _currentImageIndex > 0
-                        ? () {
-                            _pageController.previousPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          }
-                        : null,
-                    icon: const Icon(Icons.arrow_back_ios,
-                        color: Colors.white, size: 30),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 20,
-                top: 0,
-                bottom: 0,
-                child: Center(
-                  child: IconButton(
-                    onPressed: _currentImageIndex < images.length - 1
-                        ? () {
-                            _pageController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          }
-                        : null,
-                    icon: const Icon(Icons.arrow_forward_ios,
-                        color: Colors.white, size: 30),
-                  ),
-                ),
-              ),
-            ],
-
-            // Page Indicators
-            Positioned(
-              bottom: 20,
-              left: 0,
-              right: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: images.asMap().entries.map((entry) {
-                  return Container(
-                    width: 12,
-                    height: 12,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentImageIndex == entry.key
-                          ? Colors.white
-                          : Colors.white.withOpacity(0.4),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
+        child: ReloadableImage(
+          imageUrl: projectImage,
+          fit: BoxFit.contain,
+          color: widget.project['color'],
         ),
       ),
     ).animate(delay: 200.ms).fadeIn(duration: 800.ms).slideY(begin: 0.3);
@@ -460,7 +369,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: widget.project['color'].withOpacity(0.1),
+                        color: widget.project['color']??AppColors.accentGold,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Icon(
@@ -677,32 +586,6 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> {
         ],
       ),
     );
-  }
-
-  List<Map<String, dynamic>> _getProjectImages(String projectTitle) {
-    // Mock images data - in real app, these would be actual image URLs
-    return [
-      {
-        'icon': Icons.architecture,
-        'title': 'Exterior View',
-        'description': 'Modern architectural design with sustainable features',
-      },
-      {
-        'icon': Icons.home,
-        'title': 'Interior Design',
-        'description': 'Spacious and functional interior layouts',
-      },
-      {
-        'icon': Icons.landscape,
-        'title': 'Landscape',
-        'description': 'Beautiful landscaping and outdoor spaces',
-      },
-      {
-        'icon': Icons.construction,
-        'title': 'Construction Progress',
-        'description': 'High-quality construction and attention to detail',
-      },
-    ];
   }
 
   List<Map<String, dynamic>> _getProjectDetails(Map<String, dynamic> project) {

@@ -7,6 +7,8 @@ import '../providers/scroll_provider.dart';
 import '../widgets/animated_navbar.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/about_section.dart';
+import '../widgets/founder_section.dart';
+import '../widgets/vision_mission_section.dart';
 import '../widgets/services_section.dart';
 import '../widgets/projects_section.dart';
 import '../widgets/contact_section.dart';
@@ -29,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     sections = [
       const HeroSection(),
       const AboutSection(),
+      const FounderSection(),
+      const VisionMissionSection(),
       const ServicesSection(),
       const ProjectsSection(),
       const ContactSection(),
@@ -82,19 +86,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-            floatingActionButton: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: FadeTransition(opacity: anim, child: child)),
-              child: scrollProvider.isAtTop
-                  ? const SizedBox(key: ValueKey('empty'), width: 56, height: 56)
-                  : FloatingActionButton(
-                key: const ValueKey('fab'),
-                backgroundColor: AppColors.secondaryBlue.withOpacity(0.8),
-
-                child: const Icon(Icons.arrow_upward, color: Colors.white),
-                onPressed: () => scrollProvider.scrollToTop(),
-              ),
-            ),
+          floatingActionButton: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            transitionBuilder: (child, anim) => ScaleTransition(
+                scale: anim,
+                child: FadeTransition(opacity: anim, child: child)),
+            child: scrollProvider.isAtTop
+                ? const SizedBox(key: ValueKey('empty'), width: 56, height: 56)
+                : FloatingActionButton(
+                    key: const ValueKey('fab'),
+                    backgroundColor: AppColors.secondaryBlue.withOpacity(0.8),
+                    child: const Icon(Icons.arrow_upward, color: Colors.white),
+                    onPressed: () => scrollProvider.scrollToTop(),
+                  ),
+          ),
         );
       },
     );

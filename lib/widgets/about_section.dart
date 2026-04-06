@@ -45,7 +45,7 @@ class _AboutSectionState extends State<AboutSection>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 768;
-    
+
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, child) {
         return VisibilityDetector(
@@ -56,25 +56,26 @@ class _AboutSectionState extends State<AboutSection>
               horizontal: isDesktop ? 80 : 20,
               vertical: 100,
             ),
-            decoration:  const BoxDecoration(
-              gradient: AppColors.lightGradient,
-              image: DecorationImage(image: AssetImage('assets/images/aboutus.jpg') , fit: BoxFit.cover)
-            ),
+            decoration: const BoxDecoration(
+                gradient: AppColors.lightGradient,
+                image: DecorationImage(
+                    image: AssetImage('assets/images/aboutus.jpg'),
+                    fit: BoxFit.cover)),
             child: Column(
               children: [
                 // Section Title
                 _buildSectionTitle(languageProvider, isDesktop),
-                
+
                 const SizedBox(height: 60),
-                
+
                 // Content
                 if (isDesktop)
                   _buildDesktopContent(languageProvider)
                 else
                   _buildMobileContent(languageProvider),
-                
+
                 const SizedBox(height: 60),
-                
+
                 // Statistics
                 _buildStatistics(languageProvider, isDesktop),
               ],
@@ -96,13 +97,8 @@ class _AboutSectionState extends State<AboutSection>
             color: AppColors.primaryBlue,
           ),
           textAlign: TextAlign.center,
-        )
-            .animate()
-            .fadeIn(duration: 800.ms)
-            .slideY(begin: 0.3),
-        
+        ).animate().fadeIn(duration: 800.ms).slideY(begin: 0.3),
         const SizedBox(height: 10),
-        
         Container(
           width: 100,
           height: 4,
@@ -110,12 +106,8 @@ class _AboutSectionState extends State<AboutSection>
             color: AppColors.accentGold,
             borderRadius: BorderRadius.circular(2),
           ),
-        )
-            .animate(delay: 300.ms)
-            .scaleX(begin: 0, duration: 600.ms),
-        
+        ).animate(delay: 300.ms).scaleX(begin: 0, duration: 600.ms),
         const SizedBox(height: 20),
-        
         Text(
           languageProvider.getString('about_subtitle'),
           style: TextStyle(
@@ -124,50 +116,44 @@ class _AboutSectionState extends State<AboutSection>
             fontWeight: FontWeight.w500,
           ),
           textAlign: TextAlign.center,
-        )
-            .animate(delay: 500.ms)
-            .fadeIn(duration: 800.ms),
+        ).animate(delay: 500.ms).fadeIn(duration: 800.ms),
       ],
     );
   }
 
   Widget _buildDesktopContent(LanguageProvider languageProvider) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // _buildVisualElement(),
         const SizedBox(height: 20),
-        // Left Content
-        Row(
-          crossAxisAlignment: languageProvider.isArabic
-              ? CrossAxisAlignment.end
-              : CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 10,
-              child: _buildContentCard(
-                languageProvider.getString('about_description'),
-                Icons.business,
-                AppColors.primaryBlue,
-                0,
+        // Left Content - Use IntrinsicHeight to ensure equal heights
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                flex: 10,
+                child: _buildContentCard(
+                  languageProvider.getString('about_description'),
+                  Icons.business,
+                  AppColors.primaryBlue,
+                  0,
+                ),
               ),
-            ),
-            const Expanded(   flex: 1,child: SizedBox(height: 30)),
-            Expanded(   flex: 10,
-              child: _buildContentCard(
-                languageProvider.getString('about_values'),
-                Icons.family_restroom,
-                AppColors.accentGold,
-                200,
+              const SizedBox(width: 30),
+              Expanded(
+                flex: 10,
+                child: _buildContentCard(
+                  languageProvider.getString('about_values'),
+                  Icons.family_restroom,
+                  AppColors.accentGold,
+                  200,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-        
-
-        
-        // Right Image/Visual
-
       ],
     );
   }
@@ -210,6 +196,7 @@ class _AboutSectionState extends State<AboutSection>
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             width: 60,
@@ -221,12 +208,14 @@ class _AboutSectionState extends State<AboutSection>
             child: Icon(icon, color: color, size: 30),
           ),
           const SizedBox(height: 20),
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 16,
-              color: AppColors.darkGray,
-              height: 1.6,
+          Flexible(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 16,
+                color: AppColors.darkGray,
+                height: 1.6,
+              ),
             ),
           ),
         ],
@@ -237,13 +226,28 @@ class _AboutSectionState extends State<AboutSection>
         .slideY(begin: 0.3);
   }
 
-
   Widget _buildStatistics(LanguageProvider languageProvider, bool isDesktop) {
     final stats = [
-      {'number': 17, 'suffix': '+', 'label': languageProvider.getString('years_experience')},
-      {'number': 500, 'suffix': '+', 'label': languageProvider.getString('projects_completed')},
-      {'number': 50, 'suffix': '+', 'label': languageProvider.getString('expert_team')},
-      {'number': 100, 'suffix': '%', 'label': languageProvider.getString('client_satisfaction')},
+      {
+        'number': 17,
+        'suffix': '+',
+        'label': languageProvider.getString('years_experience')
+      },
+      {
+        'number': 500,
+        'suffix': '+',
+        'label': languageProvider.getString('projects_completed')
+      },
+      {
+        'number': 50,
+        'suffix': '+',
+        'label': languageProvider.getString('expert_team')
+      },
+      {
+        'number': 100,
+        'suffix': '%',
+        'label': languageProvider.getString('client_satisfaction')
+      },
     ];
 
     return Container(
@@ -295,7 +299,7 @@ class _AboutSectionState extends State<AboutSection>
             itemBuilder: (context, index) {
               final stat = stats[index];
               return _StatisticItem(
-                targetValue: stat['number']  as int,
+                targetValue: stat['number'] as int,
                 suffix: stat['suffix'] as String,
                 label: stat['label'] as String,
                 delay: Duration(milliseconds: 600 + (index * 150)),
@@ -304,10 +308,7 @@ class _AboutSectionState extends State<AboutSection>
           );
         },
       ),
-    )
-        .animate(delay: 800.ms)
-        .fadeIn(duration: 800.ms)
-        .slideY(begin: 0.3);
+    ).animate(delay: 800.ms).fadeIn(duration: 800.ms).slideY(begin: 0.3);
   }
 }
 
@@ -411,4 +412,3 @@ class _StatisticItemState extends State<_StatisticItem>
     );
   }
 }
-

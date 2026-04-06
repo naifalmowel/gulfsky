@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gulfsky_complete_website/widgets/reload_image.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:photo_view/photo_view.dart';
 import '../constants/app_colors.dart';
 import '../providers/language_provider.dart';
 
@@ -270,7 +271,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'image': '$url/Residential/GS167.jpg'
     },
     {
-      'title': ' G + 5P + H.C + 25TYP + 1Tec + H.P',
+      'title': 'G + 5P + H.C + 25TYP + 1Tec + H.P',
       'location': 'Al Khan - Sharjah',
       'type': 'Residential',
       'area': '25,000 sqm',
@@ -465,7 +466,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'area': '35,000 sqm',
       'year': '2024',
       'color': AppColors.accentGold,
-      'image': '$url/Interior/Flat%2007%20a.jpg'
+      'image': '$url/Interior/Fla07a.jpg'
     },
     {
       'title': 'G + 1 FLOOR',
@@ -483,7 +484,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'area': '35,000 sqm',
       'year': '55',
       'color': AppColors.darkGray,
-      'image': '$url/Others/GS%2020.jpg'
+      'image': '$url/Others/GS20.jpg'
     },
     {
       'title': ' CIVIL DEFENCE',
@@ -492,7 +493,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'area': '35,000 sqm',
       'year': '56',
       'color': AppColors.darkGray,
-      'image': '$url/Others/GS%20111.jpg'
+      'image': '$url/Others/GS111.jpg'
     },
     {
       'title': 'G + MEZZ',
@@ -501,7 +502,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       'area': '35,000 sqm',
       'year': '57',
       'color': AppColors.darkGray,
-      'image': '$url/Others/GS%2054.jpg'
+      'image': '$url/Others/GS54.jpg'
     },
   ];
   int _projectsToShow = 6;
@@ -754,16 +755,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     return StatefulBuilder(builder: (context1, setState1) {
       return GestureDetector(
         onTap: () {
-          // Add missing keys if they don't exist before navigating
-          final fullProject = Map<String, dynamic>.from(project);
-          fullProject['icon'] = _getProjectIcon(project['type'] ?? 'Other');
-          fullProject['description'] = project['description'] ??
-              'Professional engineering project featuring innovative solutions and high-quality construction standards.';
-
-          Navigator.of(context).pushNamed(
-            '/project-detail',
-            arguments: fullProject,
-          );
+          _showFullImageDialog(project['image'], project['title'], context);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -779,7 +771,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
           ),
           child: Column(
             children: [
-              // Project Image/Visual
+              // Project Image/Visual - Clickable
               Expanded(
                 flex: 3,
                 child: Container(
@@ -789,13 +781,14 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
+                    color: Colors.white,
                   ),
                   child: ReloadableImage(
-                    key: ValueKey(
-                        '${project['image']}_${project['title']}_$index'),
+                    key: ValueKey(project['image'] ?? project['title']),
                     imageUrl: project['image'],
                     fit: BoxFit.contain,
                     color: project['color'],
+                    useAspectRatio: false,
                   ),
                 ),
               ),
@@ -1225,5 +1218,86 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         ),
       ],
     ).animate(delay: 500.ms).fadeIn(duration: 600.ms).slideX(begin: 0.3);
+  }
+
+  void _showFullImageDialog(
+      String imageUrl, String title, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.black87,
+          insetPadding: EdgeInsets.zero,
+          child: Stack(
+            children: [
+              // PhotoView with zoom capability
+              PhotoView(
+                imageProvider: NetworkImage(Uri.encodeFull(imageUrl.trim())),
+                minScale: PhotoViewComputedScale.contained,
+                maxScale: PhotoViewComputedScale.covered * 3.0,
+                initialScale: PhotoViewComputedScale.contained,
+                backgroundDecoration: BoxDecoration(
+                  color: Colors.black87,
+                ),
+                loadingBuilder: (context, event) {
+                  if (event == null) return const SizedBox();
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: event.expectedTotalBytes != null
+                          ? event.cumulativeBytesLoaded /
+                              event.expectedTotalBytes!
+                          : null,
+                      color: AppColors.accentGold,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    padding: const EdgeInsets.all(40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.error_outline,
+                            size: 60, color: Colors.grey),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Failed to load image',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              // Close button
+              Positioned(
+                top: 20,
+                right: 20,
+                child: CircleAvatar(
+                  backgroundColor: Colors.red.withOpacity(0.8),
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showFilterSection(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return _buildFilterSection(context);
+      },
+    );
   }
 }

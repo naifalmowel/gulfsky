@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gulfsky_complete_website/screens/project_detail_screen.dart';
 import 'package:gulfsky_complete_website/screens/service_detail_screen.dart';
+import 'package:gulfsky_complete_website/screens/vision_mission_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -88,6 +89,14 @@ class GulfSkyWebsite extends StatelessWidget {
                     settings: settings,
                     builder: (context) => ProjectDetailScreen(
                       project: project ?? {},
+                    ),
+                  );
+                case '/vision-mission':
+                  return MaterialPageRoute(
+                    settings: settings,
+                    builder: (context) => Directionality(
+                      textDirection: languageProvider.textDirection,
+                      child: const VisionMissionScreen(),
                     ),
                   );
                 default:

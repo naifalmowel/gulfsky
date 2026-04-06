@@ -45,7 +45,7 @@ class AnimatedNavbar extends StatelessWidget {
                     const Spacer(),
 
                     // Navigation Items (Desktop)
-                    if (MediaQuery.of(context).size.width > 768) ...[
+                    if (MediaQuery.of(context).size.width > 1050) ...[
                       _buildNavItem(
                         languageProvider.getString('nav_home'),
                         () => _scrollToSection(context, 0),
@@ -59,22 +59,34 @@ class AnimatedNavbar extends StatelessWidget {
                             scrollProvider.currentSectionIndex == 1,
                       ),
                       _buildNavItem(
-                        languageProvider.getString('nav_services'),
+                        languageProvider.getString('nav_founder'),
                         () => _scrollToSection(context, 2),
                         isActive: scrollProvider.isInitialized &&
                             scrollProvider.currentSectionIndex == 2,
                       ),
                       _buildNavItem(
-                        languageProvider.getString('nav_projects'),
+                        languageProvider.getString('nav_vision1'),
                         () => _scrollToSection(context, 3),
                         isActive: scrollProvider.isInitialized &&
                             scrollProvider.currentSectionIndex == 3,
                       ),
                       _buildNavItem(
-                        languageProvider.getString('nav_contact'),
+                        languageProvider.getString('nav_services'),
                         () => _scrollToSection(context, 4),
                         isActive: scrollProvider.isInitialized &&
                             scrollProvider.currentSectionIndex == 4,
+                      ),
+                      _buildNavItem(
+                        languageProvider.getString('nav_projects'),
+                        () => _scrollToSection(context, 5),
+                        isActive: scrollProvider.isInitialized &&
+                            scrollProvider.currentSectionIndex == 5,
+                      ),
+                      _buildNavItem(
+                        languageProvider.getString('nav_contact'),
+                        () => _scrollToSection(context, 6),
+                        isActive: scrollProvider.isInitialized &&
+                            scrollProvider.currentSectionIndex == 6,
                       ),
                       const SizedBox(width: 20),
                     ],
@@ -83,7 +95,7 @@ class AnimatedNavbar extends StatelessWidget {
                     _buildLanguageToggle(languageProvider),
 
                     // Mobile Menu Button
-                    if (MediaQuery.of(context).size.width <= 768)
+                    if (MediaQuery.of(context).size.width <= 1050)
                       _buildMobileMenuButton(
                           context, languageProvider, scrollProvider),
                   ],
@@ -166,21 +178,31 @@ class AnimatedNavbar extends StatelessWidget {
         PopupMenuItem(
           value: 2,
           child: _buildMobileMenuItem(
-              languageProvider.getString('nav_services'), Icons.build),
+              languageProvider.getString('nav_founder'), Icons.person),
         ),
         PopupMenuItem(
           value: 3,
           child: _buildMobileMenuItem(
-              languageProvider.getString('nav_projects'), Icons.work),
+              languageProvider.getString('nav_vision1'), Icons.auto_graph),
         ),
         PopupMenuItem(
           value: 4,
+          child: _buildMobileMenuItem(
+              languageProvider.getString('nav_services'), Icons.build),
+        ),
+        PopupMenuItem(
+          value: 5,
+          child: _buildMobileMenuItem(
+              languageProvider.getString('nav_projects'), Icons.work),
+        ),
+        PopupMenuItem(
+          value: 6,
           child: _buildMobileMenuItem(
               languageProvider.getString('nav_contact'), Icons.contact_mail),
         ),
       ],
       onSelected: (value) {
-        _scrollToSection(context, value);
+          _scrollToSection(context, value);
       },
     );
   }
@@ -209,7 +231,7 @@ class AnimatedNavbar extends StatelessWidget {
         scrollProvider.scrollToSection(sectionIndex);
       } else {
         Future.delayed(
-            Duration(milliseconds: AppConstants.routeNavigationDelay), () {
+            const Duration(milliseconds: AppConstants.routeNavigationDelay), () {
           if (scrollProvider.isControllerReady) {
             scrollProvider.scrollToSection(sectionIndex);
           }
@@ -218,7 +240,7 @@ class AnimatedNavbar extends StatelessWidget {
     } else {
       Navigator.of(context).pushReplacementNamed('/').then((_) {
         Future.delayed(
-            Duration(milliseconds: AppConstants.routeNavigationDelay), () {
+            const Duration(milliseconds: AppConstants.routeNavigationDelay), () {
           if (scrollProvider.isControllerReady) {
             scrollProvider.scrollToSection(sectionIndex);
           }
@@ -259,7 +281,7 @@ class _AnimatedNavItemState extends State<_AnimatedNavItem> {
           borderRadius: BorderRadius.circular(AppConstants.largeRadius),
           child: AnimatedContainer(
             duration:
-                Duration(milliseconds: AppConstants.shortAnimationDuration),
+                const Duration(milliseconds: AppConstants.shortAnimationDuration),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: widget.isActive

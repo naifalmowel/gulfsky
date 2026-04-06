@@ -177,7 +177,7 @@ class _ServicesSectionState extends State<ServicesSection>
       crossAxisCount = 2;
       childAspectRatio = screenWidth * AppConstants.tabletAspectRatio;
     } else {
-      crossAxisCount = 2;
+      crossAxisCount = 1;
       childAspectRatio = screenWidth * AppConstants.mobileAspectRatio;
     }
     return GridView.builder(

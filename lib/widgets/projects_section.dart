@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:photo_view/photo_view.dart';
 import '../constants/app_colors.dart';
 import '../providers/language_provider.dart';
 import 'reload_image.dart';
@@ -38,6 +39,78 @@ class _ProjectsSectionState extends State<ProjectsSection>
     _animationController.dispose();
     _hoverController.dispose();
     super.dispose();
+  }
+
+  void _showFullImageDialog(
+      String imageUrl, String title, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.black87,
+          insetPadding: EdgeInsets.zero,
+          child: Stack(
+            children: [
+              // PhotoView with zoom capability
+              PhotoView(
+                imageProvider: NetworkImage(Uri.encodeFull(imageUrl.trim())),
+                minScale: PhotoViewComputedScale.contained,
+                maxScale: PhotoViewComputedScale.covered * 3.0,
+                initialScale: PhotoViewComputedScale.contained,
+                backgroundDecoration: BoxDecoration(
+                  color: Colors.black87,
+                ),
+                loadingBuilder: (context, event) {
+                  if (event == null) return const SizedBox();
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: event.expectedTotalBytes != null
+                          ? event.cumulativeBytesLoaded /
+                              event.expectedTotalBytes!
+                          : null,
+                      color: AppColors.accentGold,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    padding: const EdgeInsets.all(40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.error_outline,
+                            size: 60, color: Colors.grey),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Failed to load image',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              // Close button
+              Positioned(
+                top: 20,
+                right: 20,
+                child: CircleAvatar(
+                  backgroundColor: Colors.red.withOpacity(0.8),
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
@@ -209,7 +282,7 @@ class _ProjectsSectionState extends State<ProjectsSection>
         'area': '35,000 sqm',
         'year': '2024',
         'color': AppColors.accentGold,
-        'image': '$url/Interior/Flat%2007%20a.jpg',
+        'image': '$url/Interior/Fla07a.jpg',
         'icon': Icons.brush,
         'description':
             'Comprehensive interior design and architectural project for a mixed-use building featuring luxury amenities.',
@@ -281,10 +354,8 @@ class _ProjectsSectionState extends State<ProjectsSection>
             onExit: (_) => setState(() => _hoveredIndex = -1),
             child: GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(
-                  '/project-detail',
-                  arguments: project,
-                );
+                _showFullImageDialog(
+                    project['image'], project['title'], context);
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
@@ -314,16 +385,20 @@ class _ProjectsSectionState extends State<ProjectsSection>
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            /// الصورة الرئيسية – قص ذكي بدون تشويه
-                            ReloadableImage(
-                              key: ValueKey(
-                                  '${project['image']}_${project['title']}_$index'),
-                              imageUrl: project['image'],
-                              fit: BoxFit.cover,
-                              color: project['color'],
+                            /// الصورة الرئيسية – contain لإظهار الصورة كاملة
+                            Container(
+                              color: Colors.grey[100],
+                              child: ReloadableImage(
+                                key: ValueKey(
+                                    project['image'] ?? project['title']),
+                                imageUrl: project['image'],
+                                fit: BoxFit.contain,
+                                color: project['color'],
+                                useAspectRatio: false,
+                              ),
                             ),
 
-                            /// تدرج خفيف لإخفاء أي قص قاسي
+                            /// تدرج خفيف
                             Container(
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
@@ -331,7 +406,7 @@ class _ProjectsSectionState extends State<ProjectsSection>
                                   end: Alignment.bottomCenter,
                                   colors: [
                                     Colors.transparent,
-                                    Colors.black.withOpacity(0.18),
+                                    Colors.black.withOpacity(0.08),
                                   ],
                                 ),
                               ),
@@ -417,62 +492,6 @@ class _ProjectsSectionState extends State<ProjectsSection>
                 ),
               ),
             ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showProjectImageDialog(
-    BuildContext context,
-    Map<String, dynamic> project,
-  ) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.85),
-      builder: (context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding: const EdgeInsets.all(20),
-          child: Stack(
-            children: [
-              /// IMAGE CONTAINER
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: InteractiveViewer(
-                  minScale: 1,
-                  maxScale: 4,
-                  child: ReloadableImage(
-                    key: ValueKey(project['image']),
-                    imageUrl: project['image'],
-                    fit: BoxFit.contain,
-                    color: project['color'],
-                  ),
-                ),
-              ),
-
-              /// CLOSE BUTTON
-              Positioned(
-                top: 12,
-                right: 12,
-                child: InkWell(
-                  onTap: () => Navigator.of(context).pop(),
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.6),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 18,
-                    ),
-                  ),
-                ),
-              ),
-            ],
           ),
         );
       },

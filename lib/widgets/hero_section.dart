@@ -225,7 +225,7 @@ class _HeroSectionState extends State<HeroSection>
                 // Add delay to ensure the scroll provider is ready
                 Future.delayed(const Duration(milliseconds: 100), () {
                   if (scrollProvider.isControllerReady) {
-                    scrollProvider.scrollToServices();
+                    scrollProvider.scrollToSection(4);
                   }
                 });
               },
